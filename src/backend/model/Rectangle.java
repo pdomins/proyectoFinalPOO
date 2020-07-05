@@ -31,7 +31,17 @@ public class Rectangle extends DrawableFigure {
     }
 
     @Override
-    public void draw(GraphicsContext gc) {
+    public boolean isContained(Rectangle rectangle) {
+        return rectangle.containsPoint(topLeft) && rectangle.containsPoint(bottomRight);
+    }
 
+    @Override
+    public void draw(GraphicsContext gc) {
+        // fill rect fills a rectangle using the current fill paint fillRect(x,y,w,h) x upper left corner, y upper left corner, w width, h height)
+        gc.fillRect(this.topLeft.getX(), this.topLeft.getY(),
+                Math.abs(this.topLeft.getX() - this.bottomRight.getX()), Math.abs(this.topLeft.getY() - this.bottomRight.getY()));
+        // stroke rect strokes a rectangle using the current stroke paint strokeRect(x,y,w,h)
+        gc.strokeRect(this.topLeft.getX(), this.topLeft.getY(),
+                Math.abs(this.topLeft.getX() - this.bottomRight.getX()), Math.abs(this.topLeft.getY() - this.bottomRight.getY()));
     }
 }

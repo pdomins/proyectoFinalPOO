@@ -17,6 +17,14 @@ public class Point {
         return y;
     }
 
+    public void addToX(double value){
+        this.x += value;
+
+    }
+    public void addToY(double value){
+        this.y += value;
+    }
+
     @Override
     public String toString() {
         return String.format("{%.2f , %.2f}", x, y);
