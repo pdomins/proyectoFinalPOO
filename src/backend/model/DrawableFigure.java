@@ -1,8 +1,10 @@
 package backend.model;
 
-public abstract class Drawable extends Figure {
+import javafx.scene.canvas.GraphicsContext;
 
-    public abstract void draw();
+public abstract class DrawableFigure extends Figure {
+
+    public abstract void draw(GraphicsContext gc);
 
 }
 

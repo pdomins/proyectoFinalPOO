@@ -3,7 +3,7 @@ package frontend;
 import javafx.scene.control.*;
 
 import java.util.Optional;
-
+//TODO parametrizar salir-> salir de la app
 public class AppMenuBar extends MenuBar {
 
     public AppMenuBar() {

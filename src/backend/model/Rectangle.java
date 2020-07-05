@@ -1,6 +1,8 @@
 package backend.model;
 
-public class Rectangle extends Figure {
+import javafx.scene.canvas.GraphicsContext;
+
+public class Rectangle extends DrawableFigure {
 
     private final Point topLeft, bottomRight;
 
@@ -22,4 +24,14 @@ public class Rectangle extends Figure {
         return String.format("Rectángulo [ %s , %s ]", topLeft, bottomRight);
     }
 
+    @Override
+    public boolean containsPoint(Point point) {
+        return point.getX() > this.getTopLeft().getX() && point.getX() < this.getBottomRight().getX() &&
+                point.getY() > this.getTopLeft().getY() && point.getY() < this.getBottomRight().getY();
+    }
+
+    @Override
+    public void draw(GraphicsContext gc) {
+
+    }
 }
