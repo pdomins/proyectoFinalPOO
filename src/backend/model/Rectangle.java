@@ -36,6 +36,14 @@ public class Rectangle extends DrawableFigure {
     }
 
     @Override
+    public void move(double diffX, double diffY) {
+        this.getTopLeft().addToX(diffX);
+        this.getBottomRight().addToX(diffX);
+        this.getTopLeft().addToY(diffY);
+        this.getBottomRight().addToY(diffY);
+    }
+
+    @Override
     public void draw(GraphicsContext gc) {
         // fill rect fills a rectangle using the current fill paint fillRect(x,y,w,h) x upper left corner, y upper left corner, w width, h height)
         gc.fillRect(this.topLeft.getX(), this.topLeft.getY(),

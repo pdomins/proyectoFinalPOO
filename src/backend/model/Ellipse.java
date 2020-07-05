@@ -47,6 +47,12 @@ public class Ellipse extends DrawableFigure {
     }
 
     @Override
+    public void move(double diffX, double diffY) {
+        this.getCenterPoint().addToX(diffX);
+        this.getCenterPoint().addToY(diffY);
+    }
+
+    @Override
     public void draw(GraphicsContext gc) {
         double widthDiameter = this.getxAxisRadius() * 2;
         double heightDiameter = this.getyAxisRadius() * 2;

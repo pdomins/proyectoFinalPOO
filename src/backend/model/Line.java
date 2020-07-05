@@ -45,4 +45,12 @@ public class Line extends DrawableFigure{
     public boolean isContained(Rectangle rectangle) {
         return rectangle.containsPoint(topLeft) && containsPoint(bottomRight);
     }
+
+    @Override
+    public void move(double diffX, double diffY) {
+        this.getTopLeft().addToX(diffX);
+        this.getBottomRight().addToX(diffX);
+        this.getTopLeft().addToY(diffY);
+        this.getBottomRight().addToY(diffY);
+    }
 }

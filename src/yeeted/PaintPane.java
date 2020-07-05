@@ -65,6 +65,7 @@ public class PaintPane extends BorderPane {
 			startPoint = new Point(event.getX(), event.getY());
 		});
 
+		List<DrawableFigure> selectedFigures = new LinkedList<>();
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
 			if(startPoint == null) {
@@ -74,8 +75,8 @@ public class PaintPane extends BorderPane {
 				return ;
 			}
 			DrawableFigure newFigure = null;
-			DrawableFigure selectionFigure = null;
-			List<DrawableFigure> selectedFigures = new LinkedList<>();
+			Rectangle selectionFigure = null;
+			selectedFigures.clear();
 			if(rectangleButton.isSelected()) {
 				newFigure = new Rectangle(startPoint, endPoint);
 			}
@@ -92,8 +93,10 @@ public class PaintPane extends BorderPane {
 				newFigure = new Line(startPoint,endPoint);
 			} else { //criterio de seleccion multiple
 				selectionFigure = new Rectangle(startPoint, endPoint);
-				for (DrawableFigure figures: canvasState.figures())
-
+				for (DrawableFigure figure: canvasState.figures())
+					if (figure.isContained(selectionFigure)){
+						selectedFigures.add(figure);
+					}
 				return ;
 			}
 			canvasState.addFigure(newFigure);
@@ -139,21 +142,18 @@ public class PaintPane extends BorderPane {
 				redrawCanvas();
 			}
 		});
+
 		canvas.setOnMouseDragged(event -> {
 			if(selectionButton.isSelected()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(selectedFigure instanceof Rectangle) {
-					Rectangle rectangle = (Rectangle) selectedFigure;
-					rectangle.getTopLeft().addToX(diffX);
-					rectangle.getBottomRight().addToX(diffX);
-					rectangle.getTopLeft().addToY(diffY);
-					rectangle.getBottomRight().addToY(diffY);
-				} else if(selectedFigure instanceof Circle) {
-					Circle circle = (Circle) selectedFigure;
-					circle.getCenterPoint().addToX(diffX);
-					circle.getCenterPoint().addToY(diffY);
+				if(!selectedFigures.isEmpty()){
+					for (DrawableFigure figure: selectedFigures){
+						figure.move(diffX,diffY);
+					}
+				}else{
+					selectedFigure.move(diffX,diffY);
 				}
 				redrawCanvas();
 			}
