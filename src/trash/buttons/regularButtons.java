@@ -1,6 +1,6 @@
 package trash.buttons;
 
-import backend.CanvasState;
+import frontend.CanvasState;
 import backend.model.DrawableFigure;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;

@@ -1,10 +1,9 @@
 package trash.buttons;
 
-import backend.CanvasState;
+import frontend.CanvasState;
 import backend.model.DrawableFigure;
 import backend.model.Point;
 import backend.model.Rectangle;
-import javafx.scene.control.ToggleButton;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +12,7 @@ public class selectionButton extends toggleButtons {
 
     public selectionButton() {
         super("Seleccionar");
+
     }
 
     public List<DrawableFigure> selectMultipleFigures(Point startPoint, Point endPoint,CanvasState canvasState){

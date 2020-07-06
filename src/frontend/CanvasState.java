@@ -1,4 +1,4 @@
-package backend;
+package frontend;
 
 import backend.model.DrawableFigure;
 import backend.model.Figure;
@@ -23,6 +23,7 @@ public class CanvasState{ //implements Iterable<CanvasState>
         return new ArrayList<>(list);
     }
 
+
     public void removeFigure(DrawableFigure figure){
         list.remove(figure);
 
@@ -34,5 +35,8 @@ public class CanvasState{ //implements Iterable<CanvasState>
     public void setToBottom(DrawableFigure figure){
         list.remove(figure);
         list.add(0,figure);
+    }
+    public boolean hasFigures(){
+        return !list.isEmpty();
     }
 }

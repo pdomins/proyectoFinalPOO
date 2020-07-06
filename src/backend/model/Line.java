@@ -4,7 +4,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Line extends DrawableFigure{
 
-    private final Point topLeft, bottomRight;
+    private Point topLeft, bottomRight;
     private final int lambda = 100;
 
     public Line(Point topLeft, Point bottomRight) {
@@ -38,7 +38,8 @@ public class Line extends DrawableFigure{
         double value = ((bottomRight.getX()*point.getY()-bottomRight.getY()*point.getX())-
                             (topLeft.getX()*point.getY()-topLeft.getX()*point.getX())+
                                 (topLeft.getX()*bottomRight.getY()-topLeft.getY()*bottomRight.getX()));
-        return (value + lambda >= 0) && (value - lambda <= 0);
+        //return (value + lambda >= 0) && (value - lambda <= 0);
+        return true;
     }
 
     @Override
