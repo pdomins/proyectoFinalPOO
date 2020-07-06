@@ -77,7 +77,7 @@ public class PaintPane extends BorderPane {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
 			Toggle activeButton = myTools.getSelectedToggle();
-			if (activeButton == (selectionButton)){ //criterio seleccion multiple
+			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else if(activeButton instanceof figuresToggleButtons){
 				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
@@ -107,7 +107,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if( myTools.getSelectedToggle() == new selectionButton()) {
+			if( myTools.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
