@@ -3,12 +3,11 @@ package yeeted;
 import backend.CanvasState;
 import backend.model.*;
 import frontend.StatusPane;
+import javafx.scene.control.ToggleButton;
+import trash.buttons.*;
 import javafx.geometry.Insets;
-import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -16,7 +15,6 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 import java.util.List;
 
-//TODO cosas raras: Toggle button primero declarados despues hechos array // corregir figure belongs
 public class PaintPane extends BorderPane {
 
 	// BackEnd
@@ -29,12 +27,7 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
-	ToggleButton selectionButton = new ToggleButton("Seleccionar");
-	ToggleButton rectangleButton = new ToggleButton("Rectángulo");
-	ToggleButton circleButton = new ToggleButton("Círculo");
-	ToggleButton ellipseButton = new ToggleButton("Elipse");
-	ToggleButton squareButton = new ToggleButton("Cuadrado");
-	ToggleButton lineButton = new ToggleButton("Linea");
+	figuresToggleGroup myTools = new figuresToggleGroup(); //NUEVO
 
 	// Dibujar una figura
 	Point startPoint;
@@ -45,65 +38,41 @@ public class PaintPane extends BorderPane {
 	// StatusBar
 	StatusPane statusPane;
 
+	// Array para Multiple Seleccion
+	List<DrawableFigure> selectedFigures = new LinkedList<>();
+
+
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		ToggleButton[] toolsArr = {selectionButton, rectangleButton, circleButton,ellipseButton,squareButton,lineButton};
-		ToggleGroup tools = new ToggleGroup();
-		for (ToggleButton tool : toolsArr) {
-			tool.setMinWidth(90);
-			tool.setToggleGroup(tools);
-			tool.setCursor(Cursor.HAND);
-		}
+		myTools.createToggleGroup(); //NUEVO
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(toolsArr);
+		buttonsBox.getChildren().addAll(myTools.getToolsArr());//NUEVO
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
 		gc.setLineWidth(1);
-		canvas.setOnMousePressed(event -> {
-			startPoint = new Point(event.getX(), event.getY());
-		});
 
-		List<DrawableFigure> selectedFigures = new LinkedList<>();
+
+		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
+
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			if(startPoint == null) {
-				return ;
-			}
-			if(endPoint.getX() < startPoint.getX() || endPoint.getY() < startPoint.getY()) {
-				return ;
-			}
-			DrawableFigure newFigure = null;
-			Rectangle selectionFigure = null;
 			selectedFigures.clear();
-			if(rectangleButton.isSelected()) {
-				newFigure = new Rectangle(startPoint, endPoint);
+			ToggleButton activeButton = myTools.isOn();
+			if (activeButton.equals(new selectionButton())){ //criterio seleccion multiple
+				selectionButton selection = new selectionButton();
+				selectedFigures.addAll(selection.selectMultipleFigures(startPoint,endPoint,canvasState));
+			}else if(activeButton instanceof figuresToggleButtons){
+				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
+				DrawableFigure newFigure = auxiliarButton.newFigure(startPoint, endPoint);
+				canvasState.addFigure(newFigure);
+				startPoint = null;
+				redrawCanvas();
 			}
-			else if(circleButton.isSelected()) {
-				double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				newFigure = new Circle(startPoint, circleRadius);
-			}else if (ellipseButton.isSelected()){
-				double xRadius = Math.abs(endPoint.getX() - startPoint.getX());
-				double yRadius = Math.abs(endPoint.getY() - startPoint.getY());
-				newFigure = new Ellipse(startPoint,xRadius,yRadius);
-			}else if (squareButton.isSelected()){
-				newFigure=new Square(startPoint, Math.abs(startPoint.getX()-endPoint.getX()));
-			}else if (lineButton.isSelected()){
-				newFigure = new Line(startPoint,endPoint);
-			} else { //criterio de seleccion multiple
-				selectionFigure = new Rectangle(startPoint, endPoint);
-				for (DrawableFigure figure: canvasState.figures())
-					if (figure.isContained(selectionFigure)){
-						selectedFigures.add(figure);
-					}
-				return ;
-			}
-			canvasState.addFigure(newFigure);
-			startPoint = null;
-			redrawCanvas();
 		});
 
+		//aca son las etiquetas que aparecen abajo
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
@@ -122,7 +91,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if(selectionButton.isSelected()) {
+			if(myTools.isOn().equals(new selectionButton())) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
@@ -144,7 +113,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(selectionButton.isSelected()) {
+			if(myTools.isOn().equals(new selectionButton())) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
@@ -152,7 +121,7 @@ public class PaintPane extends BorderPane {
 					for (DrawableFigure figure: selectedFigures){
 						figure.move(diffX,diffY);
 					}
-				}else{
+				}else if (selectedFigure!=null){
 					selectedFigure.move(diffX,diffY);
 				}
 				redrawCanvas();

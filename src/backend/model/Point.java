@@ -19,8 +19,8 @@ public class Point {
 
     public void addToX(double value){
         this.x += value;
-
     }
+
     public void addToY(double value){
         this.y += value;
     }
