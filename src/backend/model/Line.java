@@ -1,6 +1,5 @@
 package backend.model;
 
-import javafx.scene.canvas.GraphicsContext;
 
 public class Line extends Figure{
 
@@ -25,15 +24,9 @@ public class Line extends Figure{
         return String.format("Linea [ %s , %s ]", topLeft, bottomRight);
     }
 
-
     @Override
     public boolean containsPoint(Point point) {
-        // the value of the cross product between the three points must be 0 if the point is inside the line
-        double value = ((bottomRight.getX()*point.getY()-bottomRight.getY()*point.getX())-
-                            (topLeft.getX()*point.getY()-topLeft.getX()*point.getX())+
-                                (topLeft.getX()*bottomRight.getY()-topLeft.getY()*bottomRight.getX()));
-        //return (value + lambda >= 0) && (value - lambda <= 0);
-        return true;
+        return isBetween(bottomRight,topLeft,point);
     }
 
     @Override
@@ -47,5 +40,18 @@ public class Line extends Figure{
         this.getBottomRight().addToX(diffX);
         this.getTopLeft().addToY(diffY);
         this.getBottomRight().addToY(diffY);
+    }
+
+    private boolean isBetween(Point a, Point b, Point c){
+        //to know if c is between a and b
+        //the crossproduct(b-a)(c-a) must be 0 (or near in case of using doubles) if the points are aligned
+        double crossproduct = (c.getY()-a.getY())*(b.getX()-a.getX())-(c.getX()-a.getX())*(b.getY()-a.getY());
+        if ( Math.abs(crossproduct) > lambda) return false;
+        //if the dotproduct(b-a)(c-a) is positive and less than the square of the distance(ab) then c is between a and b
+        double dotproduct = (c.getX()-a.getX())*(b.getX()-a.getX())+(c.getY()-a.getY())*(b.getY()-a.getY());
+        if (dotproduct < 0) return false;
+        double squaredlengthba = (b.getX()-a.getX())*(b.getX()-a.getX())+(b.getY()-a.getY())*(b.getY()-a.getY());
+        return !(dotproduct > squaredlengthba);
+
     }
 }

@@ -4,10 +4,7 @@ import backend.model.DrawableFigure;
 import backend.model.Figure;
 import frontend.Drawable.Drawable;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 // TODO hacer que la figuras sea iterable / funcion figures vuela
 //TODO no tiene sentido que haya una array list conviene una Linked List para las profundidades

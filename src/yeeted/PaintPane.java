@@ -88,7 +88,7 @@ public class PaintPane extends BorderPane {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
 			Toggle activeButton = myTools.getSelectedToggle();
-			if (activeButton == (selectionButton)){ //criterio seleccion multiple
+			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else if(activeButton instanceof figuresToggleButtons){
 				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
