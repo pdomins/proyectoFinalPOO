@@ -10,10 +10,12 @@ public class DrawableLine extends Line implements Drawable {
 
     private Color strokeColor;
     private Color fillColor;
+    private double strokeWidth;
 
-    public DrawableLine(Point topLeft, Point bottomRight, Color strokeColor) {
+    public DrawableLine(Point topLeft, Point bottomRight, Color strokeColor, double strokeWidth) {
         super(topLeft, bottomRight);
         this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
     }
     public void draw(GraphicsContext gc) {
         //strokeLine(x1,y1,x2,y2)
@@ -29,5 +31,20 @@ public class DrawableLine extends Line implements Drawable {
 
     @Override
     public void setFillColor(Color fillColor) {
+    }
+
+    @Override
+    public void setStrokeWidth(double strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public double getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    @Override
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
     }
 }

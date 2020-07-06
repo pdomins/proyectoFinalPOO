@@ -8,11 +8,13 @@ import javafx.scene.paint.Color;
 public class DrawableEllipse extends Ellipse implements Drawable {
     private Color fillColor;
     private Color strokeColor;
+    private double strokeWidth;
 
-    public DrawableEllipse(Point centerPoint, double xAxisRadius, double yAxisRadius, Color fillColor, Color strokeColor) {
+    public DrawableEllipse(Point centerPoint, double xAxisRadius, double yAxisRadius, Color fillColor, Color strokeColor, double strokeWidth) {
         super(centerPoint, xAxisRadius, yAxisRadius);
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
     }
 
     public void draw(GraphicsContext gc) {
@@ -34,5 +36,20 @@ public class DrawableEllipse extends Ellipse implements Drawable {
     @Override
     public void setFillColor(Color color) {
         fillColor = color;
+    }
+
+    @Override
+    public void setStrokeWidth(double strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public double getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    @Override
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
     }
 }

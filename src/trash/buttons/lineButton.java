@@ -13,9 +13,9 @@ public class lineButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint)){
-            return new DrawableLine(startPoint, endPoint, strokeColor);
+            return new DrawableLine(startPoint, endPoint, strokeColor, strokeWidth);
         }
         return null;
     }

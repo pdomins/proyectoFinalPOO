@@ -14,6 +14,9 @@ public interface Drawable {
     Color getFillColor();
     Color getStrokeColor();
     void setFillColor(Color color);
+    void setStrokeColor(Color color);
+    void setStrokeWidth(double width);
+    double getStrokeWidth();
 
 
 

@@ -14,10 +14,10 @@ public class ellipseButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         double xRadius = Math.abs(endPoint.getX() - startPoint.getX());
         double yRadius = Math.abs(endPoint.getY() - startPoint.getY());
-        return new DrawableEllipse(startPoint, xRadius, yRadius, fillColor, strokeColor);
+        return new DrawableEllipse(startPoint, xRadius, yRadius, fillColor, strokeColor, strokeWidth);
     }
 
 }

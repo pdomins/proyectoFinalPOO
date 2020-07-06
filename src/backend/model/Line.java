@@ -4,7 +4,7 @@ package backend.model;
 public class Line extends Figure{
 
     protected Point topLeft, bottomRight;
-    private final int lambda = 100;
+    private final int lambda = 1000;
 
     public Line(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;

@@ -9,11 +9,13 @@ import javafx.scene.paint.Paint;
 public class DrawableRectangle extends Rectangle implements Drawable {
     Color fillColor;
     Color strokeColor;
+    double strokeWidth;
 
-    public DrawableRectangle(Point topLeft, Point bottomRight, Color fillColor, Color strokeColor) {
+    public DrawableRectangle(Point topLeft, Point bottomRight, Color fillColor, Color strokeColor, double strokeWidth) {
         super(topLeft, bottomRight);
         this.fillColor = fillColor;
         this.strokeColor = strokeColor;
+        this.strokeWidth = strokeWidth;
     }
 
     public void draw(GraphicsContext gc) {
@@ -37,5 +39,20 @@ public class DrawableRectangle extends Rectangle implements Drawable {
     @Override
     public void setFillColor(Color color) {
         this.fillColor = color;
+    }
+
+    @Override
+    public void setStrokeWidth(double strokeWidth) {
+        this.strokeWidth = strokeWidth;
+    }
+
+    @Override
+    public double getStrokeWidth() {
+        return strokeWidth;
+    }
+
+    @Override
+    public void setStrokeColor(Color strokeColor) {
+        this.strokeColor = strokeColor;
     }
 }

@@ -13,9 +13,9 @@ public class squareButton extends figuresToggleButtons{
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
-            return new DrawableSquare(startPoint, Math.abs(startPoint.getX() - endPoint.getX()), fillColor, strokeColor);
+            return new DrawableSquare(startPoint, Math.abs(startPoint.getX() - endPoint.getX()), fillColor, strokeColor, strokeWidth);
         }
         return null; // a pensarlo no?
     }

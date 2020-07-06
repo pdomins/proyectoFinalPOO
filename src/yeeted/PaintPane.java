@@ -26,6 +26,7 @@ public class PaintPane extends BorderPane {
 	GraphicsContext gc = canvas.getGraphicsContext2D();
 	Color lineColor = Color.BLACK;
 	Color fillColor = Color.YELLOW;
+	double strokeWidth = 1;
 
 	// Botones Barra Izquierda
 	regularButtons deletionButton = new deletionButton();
@@ -60,11 +61,33 @@ public class PaintPane extends BorderPane {
 		}
 
 		ColorPicker fillingPicker = new ColorPicker(fillColor);
+		ColorPicker strokePicker = new ColorPicker(lineColor);
+		Slider strokeSlider = new Slider(1, 50, strokeWidth);
+		strokeSlider.setShowTickLabels(true);
+
+		strokeSlider.setOnMouseDragged(event -> {
+			double value = strokeSlider.getValue();
+			strokeWidth = value;
+			for (Drawable figure : selectedFigures) {
+				figure.setStrokeWidth(value);
+			}
+			redrawCanvas();
+		});
+
 		fillingPicker.setOnAction(e -> {
 			Color c = fillingPicker.getValue();
 			fillColor = c;
 			for (Drawable figure : selectedFigures) {
 				figure.setFillColor(c);
+			}
+			redrawCanvas();
+		});
+
+		strokePicker.setOnAction(event -> {
+			Color c = strokePicker.getValue();
+			lineColor = c;
+			for (Drawable figure : selectedFigures) {
+				figure.setStrokeColor(c);
 			}
 			redrawCanvas();
 		});
@@ -75,12 +98,15 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(deletionButton);//NUEVO
 		buttonsBox.getChildren().add(toBackButton);//NUEVO
 		buttonsBox.getChildren().add(toFrontButton);//NUEVO
-		buttonsBox.getChildren().add(new Label("Colores"));
+		buttonsBox.getChildren().add(new Label("Linea"));
+		buttonsBox.getChildren().add(strokeSlider);
+		buttonsBox.getChildren().add(strokePicker);
+		buttonsBox.getChildren().add(new Label("Relleno"));
 		buttonsBox.getChildren().add(fillingPicker);//COLOR PICKER
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
-		gc.setLineWidth(1);
+		gc.setLineWidth(strokeWidth);
 
 
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
@@ -93,7 +119,7 @@ public class PaintPane extends BorderPane {
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else if(activeButton instanceof figuresToggleButtons){
 				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
-				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint, fillColor, lineColor);
+				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
 				if (newFigure != null) canvasState.addFigure(newFigure);
 				startPoint = null;
 				redrawCanvas();
@@ -170,6 +196,7 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Drawable figure : canvasState.figures()) {
+			gc.setLineWidth(figure.getStrokeWidth());
 			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
@@ -178,6 +205,9 @@ public class PaintPane extends BorderPane {
 			gc.setFill(figure.getFillColor());
 			figure.draw(gc);
 		}
+		gc.setLineWidth(strokeWidth);
+		gc.setStroke(lineColor);
+		gc.setFill(fillColor);
 	}
 
 }

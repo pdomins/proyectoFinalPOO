@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 
 public class DrawableCircle extends DrawableEllipse {
-    public DrawableCircle(Point centerPoint, double radius, Color fillColor, Color strokeColor) {
-        super(centerPoint, radius, radius, fillColor, strokeColor);
+    public DrawableCircle(Point centerPoint, double radius, Color fillColor, Color strokeColor, double strokeWidth) {
+        super(centerPoint, radius, radius, fillColor, strokeColor, strokeWidth);
     }
 }

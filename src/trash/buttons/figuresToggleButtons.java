@@ -20,6 +20,6 @@ public abstract class figuresToggleButtons extends toggleButtons{
         //por que el end point no lo chequea en paint pane?
     }
 
-    public abstract Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor);
+    public abstract Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth);
 
 }

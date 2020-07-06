@@ -12,10 +12,10 @@ public class circleButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
             double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-            return new DrawableCircle(startPoint, circleRadius, fillColor, strokeColor);
+            return new DrawableCircle(startPoint, circleRadius, fillColor, strokeColor, strokeWidth);
         }
         return null;
     }

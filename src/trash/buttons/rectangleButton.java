@@ -13,9 +13,9 @@ public class rectangleButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
-            return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor);
+            return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor, strokeWidth);
         }
         return null; // a pensarlo no?
     }
