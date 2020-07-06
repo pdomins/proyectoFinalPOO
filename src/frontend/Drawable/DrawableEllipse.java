@@ -30,4 +30,9 @@ public class DrawableEllipse extends Ellipse implements Drawable {
     public Color getStrokeColor() {
         return strokeColor;
     }
+
+    @Override
+    public void setFillColor(Color color) {
+        fillColor = color;
+    }
 }

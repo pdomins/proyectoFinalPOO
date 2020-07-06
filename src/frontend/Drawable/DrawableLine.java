@@ -26,4 +26,8 @@ public class DrawableLine extends Line implements Drawable {
     public Color getStrokeColor() {
         return strokeColor;
     }
+
+    @Override
+    public void setFillColor(Color fillColor) {
+    }
 }

@@ -4,10 +4,7 @@ import frontend.CanvasState;
 import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.StatusPane;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import trash.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -66,6 +63,9 @@ public class PaintPane extends BorderPane {
 		fillingPicker.setOnAction(e -> {
 			Color c = fillingPicker.getValue();
 			fillColor = c;
+			for (Drawable figure : selectedFigures) {
+				figure.setFillColor(c);
+			}
 			redrawCanvas();
 		});
 
@@ -75,6 +75,7 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(deletionButton);//NUEVO
 		buttonsBox.getChildren().add(toBackButton);//NUEVO
 		buttonsBox.getChildren().add(toFrontButton);//NUEVO
+		buttonsBox.getChildren().add(new Label("Colores"));
 		buttonsBox.getChildren().add(fillingPicker);//COLOR PICKER
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");

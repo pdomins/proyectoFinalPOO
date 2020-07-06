@@ -12,7 +12,7 @@ public abstract class figuresToggleButtons extends toggleButtons{
     }
 
     public static boolean areValidCoord(Point startPoint, Point endPoint){
-        return endPoint.getX() >= startPoint.getX() || endPoint.getY() >= startPoint.getY();
+        return endPoint.getX() >= startPoint.getX() && endPoint.getY() >= startPoint.getY();
     }
 
     public static boolean areValidPoints (Point startPoint, Point endPoint){

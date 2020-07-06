@@ -13,6 +13,7 @@ public interface Drawable {
     boolean containsPoint(Point point);
     Color getFillColor();
     Color getStrokeColor();
+    void setFillColor(Color color);
 
 
 

@@ -33,4 +33,9 @@ public class DrawableRectangle extends Rectangle implements Drawable {
     public Color getStrokeColor() {
         return strokeColor;
     }
+
+    @Override
+    public void setFillColor(Color color) {
+        this.fillColor = color;
+    }
 }
