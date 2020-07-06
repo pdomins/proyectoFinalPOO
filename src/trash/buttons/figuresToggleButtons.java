@@ -3,6 +3,7 @@ package trash.buttons;
 import backend.model.Point;
 import frontend.Drawable.Drawable;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.paint.Color;
 
 public abstract class figuresToggleButtons extends toggleButtons{
 
@@ -19,6 +20,6 @@ public abstract class figuresToggleButtons extends toggleButtons{
         //por que el end point no lo chequea en paint pane?
     }
 
-    public abstract Drawable newFigure(Point startPoint, Point endPoint);
+    public abstract Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor);
 
 }

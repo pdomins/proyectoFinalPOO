@@ -3,6 +3,7 @@ package trash.buttons;
 import backend.model.Point;
 import frontend.Drawable.Drawable;
 import frontend.Drawable.DrawableCircle;
+import javafx.scene.paint.Color;
 
 public class circleButton extends figuresToggleButtons {
 
@@ -11,10 +12,10 @@ public class circleButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
             double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-            return new DrawableCircle(startPoint, circleRadius);
+            return new DrawableCircle(startPoint, circleRadius, fillColor, strokeColor);
         }
         return null;
     }

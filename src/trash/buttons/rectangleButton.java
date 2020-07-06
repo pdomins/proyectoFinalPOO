@@ -4,6 +4,7 @@ import backend.model.Point;
 import backend.model.Rectangle;
 import frontend.Drawable.Drawable;
 import frontend.Drawable.DrawableRectangle;
+import javafx.scene.paint.Color;
 
 public class rectangleButton extends figuresToggleButtons {
 
@@ -12,9 +13,9 @@ public class rectangleButton extends figuresToggleButtons {
     }
 
     @Override
-    public Drawable newFigure(Point startPoint, Point endPoint) {
+    public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
-            return new DrawableRectangle(startPoint, endPoint);
+            return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor);
         }
         return null; // a pensarlo no?
     }

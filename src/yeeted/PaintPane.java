@@ -4,6 +4,7 @@ import frontend.CanvasState;
 import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.StatusPane;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
@@ -60,11 +61,21 @@ public class PaintPane extends BorderPane {
 		for (ToggleButton tool : toolsArr) {
 			tool.setToggleGroup(myTools);
 		}
+
+		ColorPicker fillingPicker = new ColorPicker(fillColor);
+		fillingPicker.setOnAction(e -> {
+			Color c = fillingPicker.getValue();
+			fillColor = c;
+			redrawCanvas();
+		});
+
+
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(toolsArr);//NUEVO
 		buttonsBox.getChildren().add(deletionButton);//NUEVO
 		buttonsBox.getChildren().add(toBackButton);//NUEVO
 		buttonsBox.getChildren().add(toFrontButton);//NUEVO
+		buttonsBox.getChildren().add(fillingPicker);//COLOR PICKER
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -81,7 +92,7 @@ public class PaintPane extends BorderPane {
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else if(activeButton instanceof figuresToggleButtons){
 				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
-				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint);
+				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint, fillColor, lineColor);
 				if (newFigure != null) canvasState.addFigure(newFigure);
 				startPoint = null;
 				redrawCanvas();
@@ -107,7 +118,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if( myTools.getSelectedToggle() == new selectionButton()) {
+			if( myTools.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
@@ -161,9 +172,9 @@ public class PaintPane extends BorderPane {
 			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
-				gc.setStroke(lineColor);
+				gc.setStroke(figure.getStrokeColor());
 			}
-			gc.setFill(fillColor);
+			gc.setFill(figure.getFillColor());
 			figure.draw(gc);
 		}
 	}

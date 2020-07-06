@@ -3,10 +3,16 @@ package frontend.Drawable;
 import backend.model.Ellipse;
 import backend.model.Point;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class DrawableEllipse extends Ellipse implements Drawable {
-    public DrawableEllipse(Point centerPoint, double xAxisRadius, double yAxisRadius) {
+    private Color fillColor;
+    private Color strokeColor;
+
+    public DrawableEllipse(Point centerPoint, double xAxisRadius, double yAxisRadius, Color fillColor, Color strokeColor) {
         super(centerPoint, xAxisRadius, yAxisRadius);
+        this.fillColor = fillColor;
+        this.strokeColor = strokeColor;
     }
 
     public void draw(GraphicsContext gc) {
@@ -16,5 +22,12 @@ public class DrawableEllipse extends Ellipse implements Drawable {
         gc.fillOval(this.centerPoint.getX() - this.getxAxisRadius(), this.centerPoint.getY() - this.getyAxisRadius(), widthDiameter, heightDiameter);
         gc.strokeOval(this.centerPoint.getX() - this.getxAxisRadius(), this.centerPoint.getY() - this.getyAxisRadius(), widthDiameter, heightDiameter);
 
+    }
+    public Color getFillColor() {
+        return fillColor;
+    }
+
+    public Color getStrokeColor() {
+        return strokeColor;
     }
 }
