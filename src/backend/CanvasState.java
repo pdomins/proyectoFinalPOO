@@ -22,10 +22,17 @@ public class CanvasState{ //implements Iterable<CanvasState>
     public Iterable<DrawableFigure> figures() {
         return new ArrayList<>(list);
     }
+
     public void removeFigure(DrawableFigure figure){
         list.remove(figure);
 
     }
-    //public void setToTop(DrawableFigure figure);
-    //public void setToBottom(DrawableFigure figure);
+    public void setToTop(DrawableFigure figure){
+        list.remove(figure);
+        list.add(figure);
+    }
+    public void setToBottom(DrawableFigure figure){
+        list.remove(figure);
+        list.add(0,figure);
+    }
 }

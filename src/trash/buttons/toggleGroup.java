@@ -4,17 +4,15 @@ import javafx.scene.Cursor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 
-public class figuresToggleGroup {
+public class toggleGroup {
 
     ToggleButton[] toolsArr = {new selectionButton(), new rectangleButton(),new squareButton(),
             new lineButton(), new circleButton(),new ellipseButton()};
 
-    public void createToggleGroup(){
+    public void toggleGroup(){
         ToggleGroup tools = new ToggleGroup();
         for (ToggleButton tool : toolsArr) {
-            tool.setMinWidth(90);
             tool.setToggleGroup(tools);
-            tool.setCursor(Cursor.HAND);
         }
     }
 

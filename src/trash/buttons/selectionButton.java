@@ -9,7 +9,7 @@ import javafx.scene.control.ToggleButton;
 import java.util.LinkedList;
 import java.util.List;
 
-public class selectionButton extends ToggleButton implements toggleButtons {
+public class selectionButton extends toggleButtons {
 
     public selectionButton() {
         super("Seleccionar");
@@ -32,7 +32,7 @@ public class selectionButton extends ToggleButton implements toggleButtons {
         selectionButton button = (selectionButton) obj;
         return (button.getLabel()).equals(this.getLabel());
     }
-    
+
     public String getLabel() {
         return this.getText();
     }

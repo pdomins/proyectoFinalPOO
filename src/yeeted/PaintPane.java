@@ -27,27 +27,30 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 
 	// Botones Barra Izquierda
-	figuresToggleGroup myTools = new figuresToggleGroup(); //NUEVO
+	toggleGroup myTools = new toggleGroup(); //NUEVO
+	regularButtons deletionButton = new deletionButton();
+	regularButtons toFrontButton = new toFrontButton();
+	regularButtons toBackButton = new toBackButton();
 
 	// Dibujar una figura
 	Point startPoint;
 
-	// Seleccionar una figura
-	DrawableFigure selectedFigure;
-
 	// StatusBar
 	StatusPane statusPane;
 
-	// Array para Multiple Seleccion
+	// Seleccionar una o varias figuras
 	List<DrawableFigure> selectedFigures = new LinkedList<>();
 
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		myTools.createToggleGroup(); //NUEVO
+		myTools.toggleGroup(); //NUEVO
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(myTools.getToolsArr());//NUEVO
+		buttonsBox.getChildren().add(deletionButton);//NUEVO
+		buttonsBox.getChildren().add(toBackButton);//NUEVO
+		buttonsBox.getChildren().add(toFrontButton);//NUEVO
 		buttonsBox.setPadding(new Insets(5));
 		buttonsBox.setStyle("-fx-background-color: #999");
 		buttonsBox.setPrefWidth(100);
@@ -57,6 +60,7 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
 
 		canvas.setOnMouseReleased(event -> {
+			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
 			selectedFigures.clear();
 			ToggleButton activeButton = myTools.isOn();
@@ -98,18 +102,29 @@ public class PaintPane extends BorderPane {
 				for (DrawableFigure figure : canvasState.figures()) {
 					if(figure.containsPoint(eventPoint)) {
 						found = true;
-						selectedFigure = figure;
+						selectedFigures.add(figure);
 						label.append(figure.toString());
 					}
 				}
 				if (found) {
 					statusPane.updateStatus(label.toString());
 				} else {
-					selectedFigure = null;
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
 				redrawCanvas();
 			}
+			deletionButton.setOnAction(event1 -> {
+				deletionButton.action(selectedFigures,canvasState);
+				redrawCanvas();
+			} );
+			toBackButton.setOnAction(event1 -> {
+				toBackButton.action(selectedFigures,canvasState);
+				redrawCanvas();
+			});
+			toFrontButton.setOnAction(event1 -> {
+				toFrontButton.action(selectedFigures,canvasState);
+				redrawCanvas();
+			});
 		});
 
 		canvas.setOnMouseDragged(event -> {
@@ -117,12 +132,10 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				if(!selectedFigures.isEmpty()){
-					for (DrawableFigure figure: selectedFigures){
-						figure.move(diffX,diffY);
+				if(!selectedFigures.isEmpty()) {
+					for (DrawableFigure figure : selectedFigures) {
+						figure.move(diffX, diffY);
 					}
-				}else if (selectedFigure!=null){
-					selectedFigure.move(diffX,diffY);
 				}
 				redrawCanvas();
 			}
@@ -134,7 +147,7 @@ public class PaintPane extends BorderPane {
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(DrawableFigure figure : canvasState.figures()) {
-			if(figure == selectedFigure) {
+			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(lineColor);

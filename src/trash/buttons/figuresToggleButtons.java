@@ -4,9 +4,9 @@ import backend.model.DrawableFigure;
 import backend.model.Point;
 import javafx.scene.control.ToggleButton;
 
-public abstract class figuresToggleButtons extends ToggleButton implements toggleButtons{
+public abstract class figuresToggleButtons extends toggleButtons{
 
-    public figuresToggleButtons(String text){
+    public figuresToggleButtons(String text) {
         super(text);
     }
 
