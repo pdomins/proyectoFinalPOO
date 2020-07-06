@@ -149,16 +149,16 @@ public class PaintPane extends BorderPane {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
+				Drawable lastFigure = null;
 				for (Drawable figure : canvasState.figures()) {
 					if(figure.containsPoint(eventPoint)) {
-						found = true;
-						selectedFigures.add(figure);
-						label.append(figure.toString());
-						break;
+						lastFigure=figure;
 					}
 				}
-				if (found) {
+				if (lastFigure!=null) {
 					statusPane.updateStatus(label.toString());
+					selectedFigures.add(lastFigure);
+					label.append(lastFigure.toString());
 				} else {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
