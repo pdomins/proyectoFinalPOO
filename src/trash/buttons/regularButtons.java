@@ -1,7 +1,7 @@
 package trash.buttons;
 
 import frontend.CanvasState;
-import backend.model.DrawableFigure;
+import frontend.Drawable.Drawable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 
@@ -15,5 +15,5 @@ public abstract class regularButtons extends Button {
         this.setCursor(Cursor.HAND);
     }
 
-    public abstract void action(List<DrawableFigure> selectedFigures, CanvasState canvasState);
+    public abstract void action(List<Drawable> selectedFigures, CanvasState canvasState);
 }

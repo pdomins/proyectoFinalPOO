@@ -2,9 +2,9 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Rectangle extends DrawableFigure {
+public class Rectangle extends Figure {
 
-    private final Point topLeft, bottomRight;
+    protected Point topLeft, bottomRight;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
@@ -41,15 +41,5 @@ public class Rectangle extends DrawableFigure {
         this.getBottomRight().addToX(diffX);
         this.getTopLeft().addToY(diffY);
         this.getBottomRight().addToY(diffY);
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        // fill rect fills a rectangle using the current fill paint fillRect(x,y,w,h) x upper left corner, y upper left corner, w width, h height)
-        gc.fillRect(this.topLeft.getX(), this.topLeft.getY(),
-                Math.abs(this.topLeft.getX() - this.bottomRight.getX()), Math.abs(this.topLeft.getY() - this.bottomRight.getY()));
-        // stroke rect strokes a rectangle using the current stroke paint strokeRect(x,y,w,h)
-        gc.strokeRect(this.topLeft.getX(), this.topLeft.getY(),
-                Math.abs(this.topLeft.getX() - this.bottomRight.getX()), Math.abs(this.topLeft.getY() - this.bottomRight.getY()));
     }
 }

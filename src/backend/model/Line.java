@@ -2,9 +2,9 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Line extends DrawableFigure{
+public class Line extends Figure{
 
-    private Point topLeft, bottomRight;
+    protected Point topLeft, bottomRight;
     private final int lambda = 100;
 
     public Line(Point topLeft, Point bottomRight) {
@@ -25,12 +25,6 @@ public class Line extends DrawableFigure{
         return String.format("Linea [ %s , %s ]", topLeft, bottomRight);
     }
 
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        //strokeLine(x1,y1,x2,y2)
-        gc.strokeLine(topLeft.getX(), topLeft.getY(), bottomRight.getX(), bottomRight.getY());
-    }
 
     @Override
     public boolean containsPoint(Point point) {

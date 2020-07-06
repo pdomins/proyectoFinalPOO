@@ -1,8 +1,8 @@
 package trash.buttons;
 
-import backend.model.Circle;
-import backend.model.DrawableFigure;
 import backend.model.Point;
+import frontend.Drawable.Drawable;
+import frontend.Drawable.DrawableCircle;
 
 public class circleButton extends figuresToggleButtons {
 
@@ -11,10 +11,10 @@ public class circleButton extends figuresToggleButtons {
     }
 
     @Override
-    public DrawableFigure newFigure(Point startPoint, Point endPoint) {
+    public Drawable newFigure(Point startPoint, Point endPoint) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
             double circleRadius = Math.abs(endPoint.getX() - startPoint.getX());
-            return new Circle(startPoint, circleRadius);
+            return new DrawableCircle(startPoint, circleRadius);
         }
         return null;
     }

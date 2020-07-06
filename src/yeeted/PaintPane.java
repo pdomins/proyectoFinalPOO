@@ -2,6 +2,7 @@ package yeeted;
 
 import frontend.CanvasState;
 import backend.model.*;
+import frontend.Drawable.Drawable;
 import frontend.StatusPane;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleButton;
@@ -46,7 +47,7 @@ public class PaintPane extends BorderPane {
 	StatusPane statusPane;
 
 	// Seleccionar una o varias figuras
-	List<DrawableFigure> selectedFigures = new LinkedList<>();
+	List<Drawable> selectedFigures = new LinkedList<>();
 
 	//toggleGroup
 	ToggleGroup myTools = new ToggleGroup(); //NUEVO
@@ -76,12 +77,12 @@ public class PaintPane extends BorderPane {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
 			Toggle activeButton = myTools.getSelectedToggle();
-			if (activeButton.equals(selectionButton)){ //criterio seleccion multiple
+			if (activeButton == (selectionButton)){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else if(activeButton instanceof figuresToggleButtons){
 				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
-				DrawableFigure newFigure = auxiliarButton.newFigure(startPoint, endPoint);
-				canvasState.addFigure(newFigure);
+				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint);
+				if (newFigure != null) canvasState.addFigure(newFigure);
 				startPoint = null;
 				redrawCanvas();
 			}
@@ -92,7 +93,7 @@ public class PaintPane extends BorderPane {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			boolean found = false;
 			StringBuilder label = new StringBuilder();
-			for (DrawableFigure figure: canvasState.figures()){
+			for (Drawable figure: canvasState.figures()){
 				if(figure.containsPoint(eventPoint)) {
 					found = true;
 					label.append(figure.toString());
@@ -106,11 +107,11 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if( myTools.getSelectedToggle().equals(new selectionButton())) {
+			if( myTools.getSelectedToggle() == new selectionButton()) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
-				for (DrawableFigure figure : canvasState.figures()) {
+				for (Drawable figure : canvasState.figures()) {
 					if(figure.containsPoint(eventPoint)) {
 						found = true;
 						selectedFigures.add(figure);
@@ -140,11 +141,11 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(myTools.getSelectedToggle().equals(selectionButton)) {
+			if(myTools.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
-				for (DrawableFigure figure : selectedFigures) {
+				for (Drawable figure : selectedFigures) {
 					figure.move(diffX, diffY);
 				}
 				redrawCanvas();
@@ -156,7 +157,7 @@ public class PaintPane extends BorderPane {
 
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for(DrawableFigure figure : canvasState.figures()) {
+		for(Drawable figure : canvasState.figures()) {
 			if(selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {

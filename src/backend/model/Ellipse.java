@@ -2,7 +2,7 @@ package backend.model;
 
 import javafx.scene.canvas.GraphicsContext;
 
-public class Ellipse extends DrawableFigure {
+public class Ellipse extends Figure {
 
     protected final Point centerPoint;
     protected final double xAxisRadius;
@@ -50,15 +50,5 @@ public class Ellipse extends DrawableFigure {
     public void move(double diffX, double diffY) {
         this.getCenterPoint().addToX(diffX);
         this.getCenterPoint().addToY(diffY);
-    }
-
-    @Override
-    public void draw(GraphicsContext gc) {
-        double widthDiameter = this.getxAxisRadius() * 2;
-        double heightDiameter = this.getyAxisRadius() * 2;
-        //fillOval(x,y,w,h) y strokeOval(x,y,w,h)  x coordinate of the upper left bound, y coordinate of the upper left bound, width at the center of the oval, height at the center of the oval
-        gc.fillOval(this.centerPoint.getX() - this.getxAxisRadius(), this.centerPoint.getY() - this.getyAxisRadius(), widthDiameter, heightDiameter);
-        gc.strokeOval(this.centerPoint.getX() - this.getxAxisRadius(), this.centerPoint.getY() - this.getyAxisRadius(), widthDiameter, heightDiameter);
-
     }
 }

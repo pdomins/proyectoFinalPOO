@@ -2,7 +2,7 @@ package trash.buttons;
 
 
 import frontend.CanvasState;
-import backend.model.DrawableFigure;
+import frontend.Drawable.Drawable;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ public class deletionButton extends regularButtons {
     public deletionButton() {
         super("Eliminar");
     }
-    public void action(List<DrawableFigure> selectedFigures, CanvasState canvasState){
-        for (DrawableFigure figure : selectedFigures) {
+    public void action(List<Drawable> selectedFigures, CanvasState canvasState){
+        for (Drawable figure : selectedFigures) {
             canvasState.removeFigure(figure);
         }
         selectedFigures.clear();

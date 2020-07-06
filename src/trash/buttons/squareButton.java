@@ -1,8 +1,10 @@
 package trash.buttons;
 
-import backend.model.DrawableFigure;
+
 import backend.model.Point;
 import backend.model.Square;
+import frontend.Drawable.Drawable;
+import frontend.Drawable.DrawableSquare;
 
 public class squareButton extends figuresToggleButtons{
     public squareButton() {
@@ -10,9 +12,9 @@ public class squareButton extends figuresToggleButtons{
     }
 
     @Override
-    public DrawableFigure newFigure(Point startPoint, Point endPoint) {
+    public Drawable newFigure(Point startPoint, Point endPoint) {
         if (areValidPoints(startPoint,endPoint) && areValidCoord(startPoint,endPoint)){
-            return new Square(startPoint, Math.abs(startPoint.getX() - endPoint.getX()));
+            return new DrawableSquare(startPoint, Math.abs(startPoint.getX() - endPoint.getX()));
         }
         return null; // a pensarlo no?
     }

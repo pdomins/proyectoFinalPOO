@@ -1,10 +1,11 @@
 package trash.buttons;
 
+import backend.model.Figure;
 import frontend.CanvasState;
-import backend.model.DrawableFigure;
+
 import backend.model.Point;
 import backend.model.Rectangle;
-
+import frontend.Drawable.Drawable;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,10 +16,10 @@ public class selectionButton extends toggleButtons {
 
     }
 
-    public List<DrawableFigure> selectMultipleFigures(Point startPoint, Point endPoint,CanvasState canvasState){
-        List<DrawableFigure> selectedFigures = new LinkedList<>();
+    public List<Drawable> selectMultipleFigures(Point startPoint, Point endPoint, CanvasState canvasState){
+        List<Drawable> selectedFigures = new LinkedList<>();
         Rectangle selectionFigure = new Rectangle(startPoint, endPoint);
-        for (DrawableFigure figure : canvasState.figures())
+        for (Drawable figure : canvasState.figures())
             if (figure.isContained(selectionFigure)) {
                 selectedFigures.add(figure);
             }

@@ -2,6 +2,7 @@ package frontend;
 
 import backend.model.DrawableFigure;
 import backend.model.Figure;
+import frontend.Drawable.Drawable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -13,26 +14,26 @@ import java.util.List;
 
 public class CanvasState{ //implements Iterable<CanvasState>
 
-    private final List<DrawableFigure> list = new LinkedList<>();
+    private final List<Drawable> list = new LinkedList<>();
 
-    public void addFigure(DrawableFigure figure) {
+    public void addFigure(Drawable figure) {
         list.add(figure);
     }
 
-    public Iterable<DrawableFigure> figures() {
+    public Iterable<Drawable> figures() {
         return new ArrayList<>(list);
     }
 
 
-    public void removeFigure(DrawableFigure figure){
+    public void removeFigure(Drawable figure){
         list.remove(figure);
 
     }
-    public void setToTop(DrawableFigure figure){
+    public void setToTop(Drawable figure){
         list.remove(figure);
         list.add(figure);
     }
-    public void setToBottom(DrawableFigure figure){
+    public void setToBottom(Drawable figure){
         list.remove(figure);
         list.add(0,figure);
     }

@@ -1,7 +1,7 @@
 package trash.buttons;
 
 import frontend.CanvasState;
-import backend.model.DrawableFigure;
+import frontend.Drawable.Drawable;
 
 import java.util.List;
 
@@ -11,10 +11,9 @@ public class toBackButton extends regularButtons{
         super("Al Fondo");
     }
 
-
     @Override
-    public void action(List<DrawableFigure> selectedFigures, CanvasState canvasState) {
-        for (DrawableFigure figure : selectedFigures) {
+    public void action(List<Drawable> selectedFigures, CanvasState canvasState) {
+        for (Drawable figure : selectedFigures) {
             canvasState.setToBottom(figure);
         }
     }
