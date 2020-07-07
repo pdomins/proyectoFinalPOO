@@ -11,7 +11,7 @@ import javafx.scene.control.ToggleButton;
 import java.util.LinkedList;
 import java.util.List;
 
-public class selectionButton extends ToggleButton {
+public class selectionButton extends ToggleButton implements PointValidator {
 
     public selectionButton() {
         super("Seleccionar");
@@ -42,17 +42,5 @@ public class selectionButton extends ToggleButton {
 
     public String getLabel() {
         return this.getText();
-    }
-
-    private static boolean pointValidations(Point startPoint, Point endPoint){
-        return areValidPoints(startPoint, endPoint) && areValidCoord(startPoint, endPoint);
-    }
-
-    private static boolean areValidCoord(Point startPoint, Point endPoint){
-        return endPoint.getX() >= startPoint.getX() && endPoint.getY() >= startPoint.getY();
-    }
-
-    private static boolean areValidPoints (Point startPoint, Point endPoint){
-        return startPoint != null && endPoint!=null;
     }
 }

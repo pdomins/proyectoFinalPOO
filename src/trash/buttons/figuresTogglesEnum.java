@@ -5,7 +5,7 @@ import frontend.Drawable.*;
 import javafx.scene.paint.Color;
 
 
-public enum figuresTogglesEnum {
+public enum figuresTogglesEnum implements PointValidator {
 
     Rectangulo("Rectangulo"){
         @Override
@@ -62,14 +62,5 @@ public enum figuresTogglesEnum {
         return name;
     }
 
-    private static boolean pointValidations(Point startPoint, Point endPoint){
-        return areValidPoints(startPoint, endPoint) && areValidCoord(startPoint, endPoint);
-    }
-    private static boolean areValidCoord(Point startPoint, Point endPoint){
-        return endPoint.getX() >= startPoint.getX() && endPoint.getY() >= startPoint.getY();
-    }
 
-    private static boolean areValidPoints (Point startPoint, Point endPoint){
-        return startPoint != null && endPoint!=null;
-    }
 }
