@@ -1,4 +1,4 @@
-package trash.buttons;
+package frontend.buttons;
 
 import frontend.CanvasState;
 
@@ -37,10 +37,6 @@ public class selectionButton extends ToggleButton implements PointValidator {
         if (this == obj) return true;
         if (!(obj instanceof selectionButton)) return false;
         selectionButton button = (selectionButton) obj;
-        return (button.getLabel()).equals(this.getLabel());
-    }
-
-    public String getLabel() {
-        return this.getText();
+        return (button.getText()).equals(this.getText());
     }
 }

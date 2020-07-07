@@ -1,7 +1,6 @@
 package frontend;
 
 import javafx.scene.layout.VBox;
-import yeeted.PaintPane;
 
 public class MainFrame extends VBox {
 

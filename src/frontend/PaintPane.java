@@ -1,13 +1,12 @@
-package yeeted;
+package frontend;
 
 import frontend.CanvasState;
 import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.StatusPane;
+import frontend.buttons.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import jdk.nashorn.internal.runtime.options.Option;
-import trash.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -36,7 +35,7 @@ public class PaintPane extends BorderPane {
 	regularButtons deletionButton = new deletionButton();
 	regularButtons toFrontButton = new toFrontButton();
 	regularButtons toBackButton = new toBackButton();
-	selectionButton selectionButton= new selectionButton();
+	frontend.buttons.selectionButton selectionButton= new selectionButton();
 
 	// Dibujar una figura
 	Point startPoint;
@@ -164,7 +163,7 @@ public class PaintPane extends BorderPane {
 						lastFigure=figure;
 					}
 				}
-				if (lastFigure!=null) {
+				if (Optional.ofNullable(lastFigure).isPresent()) {
 					statusPane.updateStatus(label.toString());
 					selectedFigures.add(lastFigure);
 					label.append(lastFigure.toString());

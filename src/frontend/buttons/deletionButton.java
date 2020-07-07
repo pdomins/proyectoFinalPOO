@@ -1,4 +1,4 @@
-package trash.buttons;
+package frontend.buttons;
 
 
 import frontend.CanvasState;

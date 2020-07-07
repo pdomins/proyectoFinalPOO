@@ -1,4 +1,4 @@
-package trash.buttons;
+package frontend.buttons;
 
 import backend.model.Point;
 import frontend.Drawable.*;
