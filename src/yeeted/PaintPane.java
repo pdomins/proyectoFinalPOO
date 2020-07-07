@@ -6,6 +6,7 @@ import frontend.Drawable.Drawable;
 import frontend.StatusPane;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import jdk.nashorn.internal.runtime.options.Option;
 import trash.buttons.*;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
@@ -15,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class PaintPane extends BorderPane {
 
@@ -121,11 +123,13 @@ public class PaintPane extends BorderPane {
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else{
-				Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
-						.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
-				if (newFigure != null) canvasState.addFigure(newFigure);
-				startPoint = null;
-				redrawCanvas();
+				if (Optional.ofNullable(activeButton).isPresent()) {
+					Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
+							.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
+					if (Optional.ofNullable(newFigure).isPresent()) canvasState.addFigure(newFigure);
+					startPoint = null;
+					redrawCanvas();
+				}
 			}
 
 		});
