@@ -1,6 +1,5 @@
 package backend.model;
 
-
 public class Line extends Figure{
 
     protected Point topLeft, bottomRight;

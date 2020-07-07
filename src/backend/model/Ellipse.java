@@ -1,7 +1,5 @@
 package backend.model;
 
-import javafx.scene.canvas.GraphicsContext;
-
 public class Ellipse extends Figure {
 
     protected final Point centerPoint;

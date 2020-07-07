@@ -1,8 +1,11 @@
 package frontend;
 
+import frontend.Drawable.Drawable;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
+
+import java.util.List;
 
 public class StatusPane extends BorderPane {
 
@@ -23,6 +26,18 @@ public class StatusPane extends BorderPane {
 	public void updateOrDefault(String label, String def) {
 		if (label.isEmpty()) updateStatus(def);
 		else updateStatus(label);
+	}
+
+	public void showStatus(List<Drawable> figure){
+		if (figure.isEmpty()){
+			this.updateStatus("Ninguna figura encontrada");
+		}else{
+		StringBuilder label = new StringBuilder("Se seleccionó: ");
+		for (Drawable lastFigure:figure) {
+			label.append(lastFigure.toString());
+			this.updateStatus(label.toString());
+		}
+		}
 	}
 
 }

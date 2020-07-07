@@ -1,9 +1,7 @@
 package frontend;
 
-import frontend.CanvasState;
 import backend.model.*;
 import frontend.Drawable.Drawable;
-import frontend.StatusPane;
 import frontend.buttons.*;
 import javafx.scene.Cursor;
 import javafx.scene.control.*;
@@ -66,6 +64,19 @@ public class PaintPane extends BorderPane {
 			aux.setCursor(Cursor.HAND);
 		}
 
+		deletionButton.setOnAction(event1 -> {
+			deletionButton.action(selectedFigures,canvasState);
+			redrawCanvas();
+		} );
+		toBackButton.setOnAction(event1 -> {
+			toBackButton.action(selectedFigures,canvasState);
+			redrawCanvas();
+		});
+		toFrontButton.setOnAction(event1 -> {
+			toFrontButton.action(selectedFigures,canvasState);
+			redrawCanvas();
+		});
+
 		ColorPicker fillingPicker = new ColorPicker(fillColor);
 		ColorPicker strokePicker = new ColorPicker(lineColor);
 		Slider strokeSlider = new Slider(1, 50, strokeWidth);
@@ -121,6 +132,8 @@ public class PaintPane extends BorderPane {
 			ToggleButton activeButton = (ToggleButton) auxGroup.getSelectedToggle();
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
+				statusPane.showStatus(selectedFigures);
+
 			}else{
 				if (Optional.ofNullable(activeButton).isPresent()) {
 					Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
@@ -149,7 +162,6 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseClicked(event -> {
 			if( auxGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				Drawable lastFigure = null;
 				for (Drawable figure : canvasState.figures()) {
 					if(figure.containsPoint(eventPoint)) {
@@ -157,26 +169,11 @@ public class PaintPane extends BorderPane {
 					}
 				}
 				if (Optional.ofNullable(lastFigure).isPresent()) {
-					label.append(lastFigure.toString());
-					statusPane.updateStatus(label.toString());
 					selectedFigures.add(lastFigure);
-				} else {
-					statusPane.updateStatus("Ninguna figura encontrada");
+					statusPane.showStatus(selectedFigures);
 				}
 				redrawCanvas();
 			}
-			deletionButton.setOnAction(event1 -> {
-				deletionButton.action(selectedFigures,canvasState);
-				redrawCanvas();
-			} );
-			toBackButton.setOnAction(event1 -> {
-				toBackButton.action(selectedFigures,canvasState);
-				redrawCanvas();
-			});
-			toFrontButton.setOnAction(event1 -> {
-				toFrontButton.action(selectedFigures,canvasState);
-				redrawCanvas();
-			});
 		});
 
 		canvas.setOnMouseDragged(event -> {

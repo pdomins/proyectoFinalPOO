@@ -4,7 +4,6 @@ import backend.model.Point;
 import backend.model.Rectangle;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class DrawableRectangle extends Rectangle implements Drawable {
     Color fillColor;

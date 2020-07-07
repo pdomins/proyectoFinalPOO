@@ -4,10 +4,8 @@ import frontend.Drawable.Drawable;
 
 import java.util.*;
 
-// TODO hacer que la figuras sea iterable / funcion figures vuela
-//TODO no tiene sentido que haya una array list conviene una Linked List para las profundidades
 
-public class CanvasState{ //implements Iterable<CanvasState>
+public class CanvasState{
 
     private final List<Drawable> list = new LinkedList<>();
 

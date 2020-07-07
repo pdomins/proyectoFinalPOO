@@ -1,8 +1,6 @@
 package frontend.Drawable;
 
-import backend.model.Circle;
 import backend.model.Point;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 
