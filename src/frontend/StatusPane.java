@@ -20,4 +20,9 @@ public class StatusPane extends BorderPane {
 		statusLabel.setText(text);
 	}
 
+	public void updateOrDefault(String label, String def) {
+		if (label.isEmpty()) updateStatus(def);
+		else updateStatus(label);
+	}
+
 }

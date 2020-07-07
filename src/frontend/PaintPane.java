@@ -136,20 +136,13 @@ public class PaintPane extends BorderPane {
 		//aca son las etiquetas que aparecen abajo
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
-			boolean found = false;
 			StringBuilder label = new StringBuilder();
 			for (Drawable figure: canvasState.figures()){
 				if(figure.containsPoint(eventPoint)) {
-					found = true;
 					label.append(figure.toString());
 				}
 			}
-			if(found) {
-				statusPane.updateStatus(label.toString());
-			} else {
-				statusPane.updateStatus(eventPoint.toString());
-			}
-
+			statusPane.updateOrDefault(label.toString(), eventPoint.toString());
 			previousMouse = eventPoint;
 		});
 
@@ -164,9 +157,9 @@ public class PaintPane extends BorderPane {
 					}
 				}
 				if (Optional.ofNullable(lastFigure).isPresent()) {
+					label.append(lastFigure.toString());
 					statusPane.updateStatus(label.toString());
 					selectedFigures.add(lastFigure);
-					label.append(lastFigure.toString());
 				} else {
 					statusPane.updateStatus("Ninguna figura encontrada");
 				}
@@ -202,11 +195,11 @@ public class PaintPane extends BorderPane {
 		setRight(canvas);
 	}
 
-	void redrawCanvas(){
+	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-		for(Drawable figure : canvasState.figures()) {
+		for (Drawable figure : canvasState.figures()) {
 			gc.setLineWidth(figure.getStrokeWidth());
-			if(selectedFigures.contains(figure)) {
+			if (selectedFigures.contains(figure)) {
 				gc.setStroke(Color.RED);
 			} else {
 				gc.setStroke(figure.getStrokeColor());
@@ -218,5 +211,5 @@ public class PaintPane extends BorderPane {
 		gc.setStroke(lineColor);
 		gc.setFill(fillColor);
 	}
-
 }
+
