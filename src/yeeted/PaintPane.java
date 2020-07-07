@@ -13,9 +13,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class PaintPane extends BorderPane {
@@ -43,7 +41,7 @@ public class PaintPane extends BorderPane {
 	StatusPane statusPane;
 
 	// Seleccionar una o varias figuras
-	List<Drawable> selectedFigures = new LinkedList<>();
+	List<Drawable> selectedFigures = new ArrayList<>();
 
 	//toggleGroup
 	List<ToggleButton> auxArray = new ArrayList<>();

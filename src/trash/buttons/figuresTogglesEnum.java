@@ -61,6 +61,7 @@ public enum figuresTogglesEnum {
     public String getName() {
         return name;
     }
+
     private static boolean pointValidations(Point startPoint, Point endPoint){
         return areValidPoints(startPoint, endPoint) && areValidCoord(startPoint, endPoint);
     }

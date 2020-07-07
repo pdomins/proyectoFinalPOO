@@ -22,14 +22,14 @@ public class selectionButton extends ToggleButton {
 
     public List<Drawable> selectMultipleFigures(Point startPoint, Point endPoint, CanvasState canvasState){
         List<Drawable> selectedFigures = new LinkedList<>();
-        Rectangle selectionFigure = new Rectangle(startPoint, endPoint);
-        if (selectionFigure!=null) {
+        if (pointValidations(startPoint, endPoint)) {
+            Rectangle selectionFigure = new Rectangle(startPoint, endPoint);
             for (Drawable figure : canvasState.figures())
                 if (figure.isContained(selectionFigure)) {
                     selectedFigures.add(figure);
                 }
         }
-        return selectedFigures;
+            return selectedFigures;
     }
 
     @Override
@@ -42,5 +42,17 @@ public class selectionButton extends ToggleButton {
 
     public String getLabel() {
         return this.getText();
+    }
+
+    private static boolean pointValidations(Point startPoint, Point endPoint){
+        return areValidPoints(startPoint, endPoint) && areValidCoord(startPoint, endPoint);
+    }
+
+    private static boolean areValidCoord(Point startPoint, Point endPoint){
+        return endPoint.getX() >= startPoint.getX() && endPoint.getY() >= startPoint.getY();
+    }
+
+    private static boolean areValidPoints (Point startPoint, Point endPoint){
+        return startPoint != null && endPoint!=null;
     }
 }
