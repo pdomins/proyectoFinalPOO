@@ -4,6 +4,7 @@ import frontend.CanvasState;
 import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.StatusPane;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import trash.buttons.*;
 import javafx.geometry.Insets;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,11 +35,6 @@ public class PaintPane extends BorderPane {
 	regularButtons toFrontButton = new toFrontButton();
 	regularButtons toBackButton = new toBackButton();
 	selectionButton selectionButton= new selectionButton();
-	figuresToggleButtons rectangleButton = new rectangleButton();
-	figuresToggleButtons squareButton = new squareButton();
-	figuresToggleButtons lineButton = new lineButton();
-	figuresToggleButtons circleButton = new circleButton();
-	figuresToggleButtons ellipseButton = new ellipseButton();
 
 	// Dibujar una figura
 	Point startPoint;
@@ -49,15 +46,23 @@ public class PaintPane extends BorderPane {
 	List<Drawable> selectedFigures = new LinkedList<>();
 
 	//toggleGroup
-	ToggleGroup myTools = new ToggleGroup(); //NUEVO
-	ToggleButton[] toolsArr = {selectionButton,rectangleButton,squareButton,lineButton,circleButton,ellipseButton};
-
+	List<ToggleButton> auxArray = new ArrayList<>();
+	ToggleGroup auxGroup = new ToggleGroup();
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
+
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
-		for (ToggleButton tool : toolsArr) {
-			tool.setToggleGroup(myTools);
+
+		selectionButton.setToggleGroup(auxGroup);
+		auxArray.add(selectionButton);
+
+		for (figuresTogglesEnum figuresTog: figuresTogglesEnum.values()){
+			ToggleButton aux = new ToggleButton(figuresTog.getName());
+			auxArray.add(aux);
+			aux.setToggleGroup(auxGroup);
+			aux.setMinWidth(90);
+			aux.setCursor(Cursor.HAND);
 		}
 
 		ColorPicker fillingPicker = new ColorPicker(fillColor);
@@ -92,9 +97,8 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
-
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(toolsArr);//NUEVO
+		buttonsBox.getChildren().addAll(auxArray);//NUEVO
 		buttonsBox.getChildren().add(deletionButton);//NUEVO
 		buttonsBox.getChildren().add(toBackButton);//NUEVO
 		buttonsBox.getChildren().add(toFrontButton);//NUEVO
@@ -110,16 +114,14 @@ public class PaintPane extends BorderPane {
 
 
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
-
 		canvas.setOnMouseReleased(event -> {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
-			Toggle activeButton = myTools.getSelectedToggle();
+			Toggle activeButton = auxGroup.getSelectedToggle();
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
-			}else if(activeButton instanceof figuresToggleButtons){
-				figuresToggleButtons auxiliarButton = (figuresToggleButtons) activeButton;
-				Drawable newFigure = auxiliarButton.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
+			}else{
+				Drawable newFigure = figuresTogglesEnum.valueOf(((ToggleButton)activeButton).getText()).newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
 				if (newFigure != null) canvasState.addFigure(newFigure);
 				startPoint = null;
 				redrawCanvas();
@@ -145,9 +147,8 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if( myTools.getSelectedToggle() == selectionButton) {
+			if( auxGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				boolean found = false;
 				StringBuilder label = new StringBuilder("Se seleccionó: ");
 				Drawable lastFigure = null;
 				for (Drawable figure : canvasState.figures()) {
@@ -179,7 +180,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(myTools.getSelectedToggle() == selectionButton) {
+			if(auxGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
 				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;

@@ -1,18 +1,22 @@
 package trash.buttons;
 
-import backend.model.Figure;
 import frontend.CanvasState;
 
 import backend.model.Point;
 import backend.model.Rectangle;
 import frontend.Drawable.Drawable;
+import javafx.scene.Cursor;
+import javafx.scene.control.ToggleButton;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class selectionButton extends toggleButtons {
+public class selectionButton extends ToggleButton {
 
     public selectionButton() {
         super("Seleccionar");
+        this.setMinWidth(90);
+        this.setCursor(Cursor.HAND);
 
     }
 
