@@ -1,7 +1,5 @@
 package frontend;
 
-import backend.model.DrawableFigure;
-import backend.model.Figure;
 import frontend.Drawable.Drawable;
 
 import java.util.*;

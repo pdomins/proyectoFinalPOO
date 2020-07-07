@@ -28,7 +28,7 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 	double strokeWidth = 1;
 
-	Point previousMouse = null;
+	Point previousMouse;
 
 	// Botones Barra Izquierda
 	regularButtons deletionButton = new deletionButton();

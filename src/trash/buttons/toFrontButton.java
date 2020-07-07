@@ -1,7 +1,6 @@
 package trash.buttons;
 
 import frontend.CanvasState;
-import backend.model.DrawableFigure;
 import frontend.Drawable.Drawable;
 
 import java.util.List;
