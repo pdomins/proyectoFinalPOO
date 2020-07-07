@@ -28,6 +28,8 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 	double strokeWidth = 1;
 
+	Point previousMouse = null;
+
 	// Botones Barra Izquierda
 	regularButtons deletionButton = new deletionButton();
 	regularButtons toFrontButton = new toFrontButton();
@@ -56,6 +58,7 @@ public class PaintPane extends BorderPane {
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+
 		for (ToggleButton tool : toolsArr) {
 			tool.setToggleGroup(myTools);
 		}
@@ -124,6 +127,7 @@ public class PaintPane extends BorderPane {
 				startPoint = null;
 				redrawCanvas();
 			}
+			previousMouse = null;
 		});
 
 		//aca son las etiquetas que aparecen abajo
@@ -181,12 +185,18 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if(myTools.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				if (previousMouse == null) {
+					previousMouse = eventPoint;
+				}
+				//double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
+				//double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				double diffX = (eventPoint.getX() - previousMouse.getX());
+				double diffY = (eventPoint.getY() - previousMouse.getY());
 				for (Drawable figure : selectedFigures) {
 					figure.move(diffX, diffY);
 				}
 				redrawCanvas();
+				previousMouse = eventPoint;
 			}
 		});
 		setLeft(buttonsBox);
