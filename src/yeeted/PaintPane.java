@@ -127,7 +127,7 @@ public class PaintPane extends BorderPane {
 				startPoint = null;
 				redrawCanvas();
 			}
-			previousMouse = null;
+
 		});
 
 		//aca son las etiquetas que aparecen abajo
@@ -146,6 +146,8 @@ public class PaintPane extends BorderPane {
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
 			}
+
+			previousMouse = eventPoint;
 		});
 
 		canvas.setOnMouseClicked(event -> {
@@ -185,11 +187,6 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if(myTools.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				if (previousMouse == null) {
-					previousMouse = eventPoint;
-				}
-				//double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				//double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
 				double diffX = (eventPoint.getX() - previousMouse.getX());
 				double diffY = (eventPoint.getY() - previousMouse.getY());
 				for (Drawable figure : selectedFigures) {
