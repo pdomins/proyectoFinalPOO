@@ -28,6 +28,8 @@ public class PaintPane extends BorderPane {
 	Color fillColor = Color.YELLOW;
 	double strokeWidth = 1;
 
+	Point previousMouse = null;
+
 	// Botones Barra Izquierda
 	regularButtons deletionButton = new deletionButton();
 	regularButtons toFrontButton = new toFrontButton();
@@ -55,7 +57,7 @@ public class PaintPane extends BorderPane {
 		selectionButton.setToggleGroup(auxGroup);
 		auxArray.add(selectionButton);
 
-		for (figuresTogglesEnum figuresTog: figuresTogglesEnum.values()){
+		for (figuresTogglesEnum figuresTog: figuresTogglesEnum.values()) {
 			ToggleButton aux = new ToggleButton(figuresTog.getName());
 			auxArray.add(aux);
 			aux.setToggleGroup(auxGroup);
@@ -125,6 +127,7 @@ public class PaintPane extends BorderPane {
 				startPoint = null;
 				redrawCanvas();
 			}
+
 		});
 
 		//aca son las etiquetas que aparecen abajo
@@ -143,6 +146,8 @@ public class PaintPane extends BorderPane {
 			} else {
 				statusPane.updateStatus(eventPoint.toString());
 			}
+
+			previousMouse = eventPoint;
 		});
 
 		canvas.setOnMouseClicked(event -> {
@@ -181,19 +186,20 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseDragged(event -> {
 			if(auxGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
-				double diffX = (eventPoint.getX() - startPoint.getX()) / 100;
-				double diffY = (eventPoint.getY() - startPoint.getY()) / 100;
+				double diffX = (eventPoint.getX() - previousMouse.getX());
+				double diffY = (eventPoint.getY() - previousMouse.getY());
 				for (Drawable figure : selectedFigures) {
 					figure.move(diffX, diffY);
 				}
 				redrawCanvas();
+				previousMouse = eventPoint;
 			}
 		});
 		setLeft(buttonsBox);
 		setRight(canvas);
 	}
 
-	void redrawCanvas() {
+	void redrawCanvas(){
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for(Drawable figure : canvasState.figures()) {
 			gc.setLineWidth(figure.getStrokeWidth());
