@@ -23,10 +23,12 @@ public class selectionButton extends ToggleButton {
     public List<Drawable> selectMultipleFigures(Point startPoint, Point endPoint, CanvasState canvasState){
         List<Drawable> selectedFigures = new LinkedList<>();
         Rectangle selectionFigure = new Rectangle(startPoint, endPoint);
-        for (Drawable figure : canvasState.figures())
-            if (figure.isContained(selectionFigure)) {
-                selectedFigures.add(figure);
-            }
+        if (selectionFigure!=null) {
+            for (Drawable figure : canvasState.figures())
+                if (figure.isContained(selectionFigure)) {
+                    selectedFigures.add(figure);
+                }
+        }
         return selectedFigures;
     }
 

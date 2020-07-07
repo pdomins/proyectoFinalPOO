@@ -98,10 +98,10 @@ public class PaintPane extends BorderPane {
 		});
 
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(auxArray);//NUEVO
-		buttonsBox.getChildren().add(deletionButton);//NUEVO
-		buttonsBox.getChildren().add(toBackButton);//NUEVO
-		buttonsBox.getChildren().add(toFrontButton);//NUEVO
+		buttonsBox.getChildren().addAll(auxArray);
+		buttonsBox.getChildren().add(deletionButton);
+		buttonsBox.getChildren().add(toBackButton);
+		buttonsBox.getChildren().add(toFrontButton);
 		buttonsBox.getChildren().add(new Label("Linea"));
 		buttonsBox.getChildren().add(strokeSlider);
 		buttonsBox.getChildren().add(strokePicker);
@@ -117,11 +117,12 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseReleased(event -> {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
-			Toggle activeButton = auxGroup.getSelectedToggle();
+			ToggleButton activeButton = (ToggleButton) auxGroup.getSelectedToggle();
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 			}else{
-				Drawable newFigure = figuresTogglesEnum.valueOf(((ToggleButton)activeButton).getText()).newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
+				Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
+						.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
 				if (newFigure != null) canvasState.addFigure(newFigure);
 				startPoint = null;
 				redrawCanvas();
