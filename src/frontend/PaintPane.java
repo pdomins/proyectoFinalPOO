@@ -127,11 +127,12 @@ public class PaintPane extends BorderPane {
 
 
 		canvas.setOnMouseReleased(event -> {
-			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
 			ToggleButton activeButton = (ToggleButton) toggleGroup.getSelectedToggle();
-			if (activeButton == selectionButton){ //criterio seleccion multiple
-				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
+			if (activeButton == selectionButton) { //criterio seleccion multiple
+				List<Drawable> found = selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState);
+				if (!found.isEmpty() && selectedFigures.isEmpty()) selectedFigures.addAll(found); //Si encontre figuras pero tengo otras seleccionadas, no las selecciono
+				else selectedFigures.clear(); // Si no encontre nada, vacio selectedFigures (Click o drag sobre zona vacia)
 				statusPane.showStatus(selectedFigures);
 			}else if (Optional.ofNullable(activeButton).isPresent()) {
 					figuresTogglesEnum auxButton = figuresTogglesEnum.matchAndGetButtonName(activeButton.getText());
