@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 
 import java.util.List;
+import java.util.Optional;
 
 public class StatusPane extends BorderPane {
 
@@ -41,10 +42,10 @@ public class StatusPane extends BorderPane {
 	}
 
 	public void showStatusNewFigure(Drawable figure){
-		if (figure==null){
-			this.updateStatus("Coordenadas Incorrectas: no se ha podido crear la figura");
-		}else{
+		if (Optional.ofNullable(figure).isPresent()){
 			this.updateStatus("Se insertó figura: " + figure);
+		}else{
+			this.updateStatus("Coordenadas Incorrectas: no se ha podido crear la figura");
 		}
 	}
 
