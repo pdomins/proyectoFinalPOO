@@ -7,14 +7,14 @@ import javafx.scene.paint.Color;
 
 public enum figuresTogglesEnum implements PointValidator {
 
-    Rectangulo("Rectangulo"){
+    RECTANGLE("Rectángulo"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
             return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor, strokeWidth);
         }
         return null; }},
-    Cuadrado("Cuadrado"){
+    SQUARE("Cuadrado"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -22,7 +22,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    Circulo("Circulo"){
+    CIRCLE("Círculo"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -31,7 +31,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    Elipse("Elipse"){
+    ELLIPSE("Elipse"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)) {
@@ -43,7 +43,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    Linea("Linea"){
+    LINE("Línea"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint)){
@@ -62,6 +62,15 @@ public enum figuresTogglesEnum implements PointValidator {
 
     public String getName() {
         return name;
+    }
+
+    public static figuresTogglesEnum matchAndGetButtonName(String name) {
+        for (figuresTogglesEnum figuresTog : figuresTogglesEnum.values()) {
+            if (figuresTog.getName().equals(name)){
+                return figuresTog;
+            }
+        }
+        return null;
     }
 
 }

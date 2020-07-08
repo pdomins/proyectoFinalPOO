@@ -22,8 +22,8 @@ public class PaintPane extends BorderPane {
 	// Canvas y relacionados
 	Canvas canvas = new Canvas(800, 600);
 	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.BLACK;
-	Color fillColor = Color.YELLOW;
+	Color lineColor = Color.CORNFLOWERBLUE;
+	Color fillColor = Color.MISTYROSE;
 	double strokeWidth = 1;
 
 	Point previousMouse;
@@ -124,6 +124,8 @@ public class PaintPane extends BorderPane {
 
 
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
+
+
 		canvas.setOnMouseReleased(event -> {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
@@ -131,14 +133,15 @@ public class PaintPane extends BorderPane {
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 				statusPane.showStatus(selectedFigures);
-			}else{
-				if (Optional.ofNullable(activeButton).isPresent()) {
-					Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
-							.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
-					if (Optional.ofNullable(newFigure).isPresent()) canvasState.addFigure(newFigure);
-					startPoint = null;
-					redrawCanvas();
-				}
+			}else if (Optional.ofNullable(activeButton).isPresent()) {
+					figuresTogglesEnum auxButton = figuresTogglesEnum.matchAndGetButtonName(activeButton.getText());
+						if (Optional.ofNullable(auxButton).isPresent()) {
+							Drawable newFigure = auxButton.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
+							if (Optional.ofNullable(newFigure).isPresent()) canvasState.addFigure(newFigure);
+							statusPane.showStatusNewFigure(newFigure);
+						}
+						startPoint = null;
+						redrawCanvas();
 			}
 		});
 

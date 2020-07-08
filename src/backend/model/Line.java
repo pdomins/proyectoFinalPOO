@@ -20,7 +20,7 @@ public class Line extends Figure{
 
     @Override
     public String toString() {
-        return String.format("Linea [ %s , %s ]", topLeft, bottomRight);
+        return String.format("Línea [ %s , %s ]", topLeft, bottomRight);
     }
 
     @Override
