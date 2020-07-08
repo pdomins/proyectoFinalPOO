@@ -64,5 +64,4 @@ public enum figuresTogglesEnum implements PointValidator {
         return name;
     }
 
-
 }

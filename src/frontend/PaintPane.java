@@ -17,7 +17,6 @@ import java.util.Optional;
 
 public class PaintPane extends BorderPane {
 
-	// BackEnd
 	CanvasState canvasState;
 
 	// Canvas y relacionados
@@ -45,21 +44,24 @@ public class PaintPane extends BorderPane {
 	List<Drawable> selectedFigures = new ArrayList<>();
 
 	//toggleGroup
-	List<ToggleButton> auxArray = new ArrayList<>();
-	ToggleGroup auxGroup = new ToggleGroup();
+	ToggleGroup toggleGroup = new ToggleGroup();
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
 		this.canvasState = canvasState;
 		this.statusPane = statusPane;
+		ColorPicker fillingPicker = new ColorPicker(fillColor);
+		ColorPicker strokePicker = new ColorPicker(lineColor);
+		Slider strokeSlider = new Slider(1, 50, strokeWidth);
+		List<ToggleButton> auxList = new ArrayList<>();
 
-		selectionButton.setToggleGroup(auxGroup);
-		auxArray.add(selectionButton);
+		selectionButton.setToggleGroup(toggleGroup);
+		auxList.add(selectionButton);
 
 		for (figuresTogglesEnum figuresTog: figuresTogglesEnum.values()) {
 			ToggleButton aux = new ToggleButton(figuresTog.getName());
-			auxArray.add(aux);
-			aux.setToggleGroup(auxGroup);
+			auxList.add(aux);
+			aux.setToggleGroup(toggleGroup);
 			aux.setMinWidth(90);
 			aux.setCursor(Cursor.HAND);
 		}
@@ -77,11 +79,8 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
-		ColorPicker fillingPicker = new ColorPicker(fillColor);
-		ColorPicker strokePicker = new ColorPicker(lineColor);
-		Slider strokeSlider = new Slider(1, 50, strokeWidth);
-		strokeSlider.setShowTickLabels(true);
 
+		strokeSlider.setShowTickLabels(true);
 		strokeSlider.setOnMouseDragged(event -> {
 			double value = strokeSlider.getValue();
 			strokeWidth = value;
@@ -90,7 +89,14 @@ public class PaintPane extends BorderPane {
 			}
 			redrawCanvas();
 		});
-
+		strokePicker.setOnAction(event -> {
+			Color c = strokePicker.getValue();
+			lineColor = c;
+			for (Drawable figure : selectedFigures) {
+				figure.setStrokeColor(c);
+			}
+			redrawCanvas();
+		});
 		fillingPicker.setOnAction(e -> {
 			Color c = fillingPicker.getValue();
 			fillColor = c;
@@ -100,17 +106,9 @@ public class PaintPane extends BorderPane {
 			redrawCanvas();
 		});
 
-		strokePicker.setOnAction(event -> {
-			Color c = strokePicker.getValue();
-			lineColor = c;
-			for (Drawable figure : selectedFigures) {
-				figure.setStrokeColor(c);
-			}
-			redrawCanvas();
-		});
 
 		VBox buttonsBox = new VBox(10);
-		buttonsBox.getChildren().addAll(auxArray);
+		buttonsBox.getChildren().addAll(auxList);
 		buttonsBox.getChildren().add(deletionButton);
 		buttonsBox.getChildren().add(toBackButton);
 		buttonsBox.getChildren().add(toFrontButton);
@@ -129,11 +127,10 @@ public class PaintPane extends BorderPane {
 		canvas.setOnMouseReleased(event -> {
 			selectedFigures.clear();
 			Point endPoint = new Point(event.getX(), event.getY());
-			ToggleButton activeButton = (ToggleButton) auxGroup.getSelectedToggle();
+			ToggleButton activeButton = (ToggleButton) toggleGroup.getSelectedToggle();
 			if (activeButton == selectionButton){ //criterio seleccion multiple
 				selectedFigures.addAll(selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState));
 				statusPane.showStatus(selectedFigures);
-
 			}else{
 				if (Optional.ofNullable(activeButton).isPresent()) {
 					Drawable newFigure = figuresTogglesEnum.valueOf(activeButton.getText())
@@ -143,10 +140,9 @@ public class PaintPane extends BorderPane {
 					redrawCanvas();
 				}
 			}
-
 		});
 
-		//aca son las etiquetas que aparecen abajo
+
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			StringBuilder label = new StringBuilder();
@@ -160,7 +156,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseClicked(event -> {
-			if( auxGroup.getSelectedToggle() == selectionButton) {
+			if( toggleGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				Drawable lastFigure = null;
 				for (Drawable figure : canvasState.figures()) {
@@ -177,7 +173,7 @@ public class PaintPane extends BorderPane {
 		});
 
 		canvas.setOnMouseDragged(event -> {
-			if(auxGroup.getSelectedToggle() == selectionButton) {
+			if(toggleGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - previousMouse.getX());
 				double diffY = (eventPoint.getY() - previousMouse.getY());
