@@ -2,20 +2,21 @@ package frontend.buttons;
 
 import backend.model.Point;
 import frontend.Drawable.*;
+import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 
 public enum figuresTogglesEnum implements PointValidator {
 
-    RECTANGLE("Rectángulo",new Image("file:cursores/squirtle.png")){
+    RECTANGLE("Rectángulo","file:cursores/squirtle.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
             return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor, strokeWidth);
         }
         return null; }},
-    SQUARE("Cuadrado",new Image("file:cursores/bulbasaur.png")){
+    SQUARE("Cuadrado","file:cursores/bulbasaur.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -23,7 +24,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    CIRCLE("Círculo",new Image("file:cursores/cyndaquil.png")){
+    CIRCLE("Círculo","file:cursores/cyndaquil.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -32,7 +33,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    ELLIPSE("Elipse",new Image("file:cursores/totodile.png")){
+    ELLIPSE("Elipse","file:cursores/totodile.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)) {
@@ -44,7 +45,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    LINE("Línea",new Image("file:cursores/chikorita.png")){
+    LINE("Línea","file:cursores/chikorita.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint)){
@@ -55,16 +56,16 @@ public enum figuresTogglesEnum implements PointValidator {
 
 
     private String name;
-    Image cursorImage;
+    ImageCursor cursorImage;
 
     public abstract Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth);
 
-    figuresTogglesEnum(String name, Image cursorImage) {
+    figuresTogglesEnum(String name, String imagePath) {
         this.name = name;
-        this.cursorImage=cursorImage;
+        this.cursorImage = new ImageCursor(new Image(imagePath));
     }
 
-    public Image getCursorImage() {
+    public ImageCursor getCursorImage() {
         return cursorImage;
     }
 

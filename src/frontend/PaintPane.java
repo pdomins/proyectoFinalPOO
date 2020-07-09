@@ -68,7 +68,7 @@ public class PaintPane extends BorderPane {
 			auxList.add(aux);
 			aux.setToggleGroup(toggleGroup);
 			aux.setMinWidth(90);
-			aux.setCursor(new ImageCursor(figuresTog.getCursorImage()));
+			aux.setCursor(figuresTog.getCursorImage());
 		}
 
 		deletionButton.setOnAction(event1 -> {
