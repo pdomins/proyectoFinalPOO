@@ -2,7 +2,9 @@ package frontend;
 
 import frontend.Drawable.Drawable;
 import javafx.geometry.Pos;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 
 import java.util.List;
@@ -18,6 +20,8 @@ public class StatusPane extends BorderPane {
 		statusLabel.setAlignment(Pos.CENTER);
 		statusLabel.setStyle("-fx-font-size: 16");
 		setCenter(statusLabel);
+		this.setCursor(new ImageCursor(new Image("file:cursores/snorlax.png")));
+
 	}
 	
 	public void updateStatus(String text) {

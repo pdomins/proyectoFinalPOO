@@ -6,7 +6,9 @@ import backend.model.Point;
 import backend.model.Rectangle;
 import frontend.Drawable.Drawable;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.ToggleButton;
+import javafx.scene.image.Image;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class selectionButton extends ToggleButton implements PointValidator {
     public selectionButton() {
         super("Seleccionar");
         this.setMinWidth(90);
-        this.setCursor(Cursor.HAND);
+        this.setCursor(new ImageCursor(new Image("file:cursores/charmander.png")));
 
     }
 

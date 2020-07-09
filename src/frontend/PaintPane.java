@@ -4,10 +4,12 @@ import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.buttons.*;
 import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -46,6 +48,8 @@ public class PaintPane extends BorderPane {
 	//toggleGroup
 	ToggleGroup toggleGroup = new ToggleGroup();
 
+	Image cursorImage = new Image("file:cursores/pokeball.png");
+
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
 		this.canvasState = canvasState;
@@ -54,6 +58,7 @@ public class PaintPane extends BorderPane {
 		ColorPicker strokePicker = new ColorPicker(lineColor);
 		Slider strokeSlider = new Slider(1, 50, strokeWidth);
 		List<ToggleButton> auxList = new ArrayList<>();
+		canvas.setCursor(new ImageCursor(cursorImage));
 
 		selectionButton.setToggleGroup(toggleGroup);
 		auxList.add(selectionButton);
@@ -63,7 +68,7 @@ public class PaintPane extends BorderPane {
 			auxList.add(aux);
 			aux.setToggleGroup(toggleGroup);
 			aux.setMinWidth(90);
-			aux.setCursor(Cursor.HAND);
+			aux.setCursor(new ImageCursor(figuresTog.getCursorImage()));
 		}
 
 		deletionButton.setOnAction(event1 -> {
@@ -189,6 +194,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		setLeft(buttonsBox);
+		buttonsBox.setCursor(new ImageCursor(cursorImage));
 		setRight(canvas);
 	}
 

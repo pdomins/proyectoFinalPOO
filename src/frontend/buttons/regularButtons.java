@@ -12,7 +12,6 @@ public abstract class regularButtons extends Button {
     public regularButtons(String text) {
         super(text);
         this.setMinWidth(90);
-        this.setCursor(Cursor.HAND);
     }
 
     public abstract void action(List<Drawable> selectedFigures, CanvasState canvasState);

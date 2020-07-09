@@ -2,19 +2,20 @@ package frontend.buttons;
 
 import backend.model.Point;
 import frontend.Drawable.*;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
 
 public enum figuresTogglesEnum implements PointValidator {
 
-    RECTANGLE("Rectángulo"){
+    RECTANGLE("Rectángulo",new Image("file:cursores/squirtle.png")){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
             return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor, strokeWidth);
         }
         return null; }},
-    SQUARE("Cuadrado"){
+    SQUARE("Cuadrado",new Image("file:cursores/bulbasaur.png")){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -22,7 +23,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    CIRCLE("Círculo"){
+    CIRCLE("Círculo",new Image("file:cursores/cyndaquil.png")){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -31,7 +32,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    ELLIPSE("Elipse"){
+    ELLIPSE("Elipse",new Image("file:cursores/totodile.png")){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)) {
@@ -43,7 +44,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    LINE("Línea"){
+    LINE("Línea",new Image("file:cursores/chikorita.png")){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint)){
@@ -54,10 +55,17 @@ public enum figuresTogglesEnum implements PointValidator {
 
 
     private String name;
+    Image cursorImage;
+
     public abstract Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth);
 
-    figuresTogglesEnum(String name) {
+    figuresTogglesEnum(String name, Image cursorImage) {
         this.name = name;
+        this.cursorImage=cursorImage;
+    }
+
+    public Image getCursorImage() {
+        return cursorImage;
     }
 
     public String getName() {
