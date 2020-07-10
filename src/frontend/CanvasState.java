@@ -30,7 +30,4 @@ public class CanvasState{
         list.remove(figure);
         list.add(0,figure);
     }
-    public boolean hasFigures(){
-        return !list.isEmpty();
-    }
 }
