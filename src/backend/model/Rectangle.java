@@ -2,7 +2,7 @@ package backend.model;
 
 public class Rectangle extends Figure {
 
-    protected Point topLeft, bottomRight;
+    protected final Point topLeft, bottomRight;
 
     public Rectangle(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;

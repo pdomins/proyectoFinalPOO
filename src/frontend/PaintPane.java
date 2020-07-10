@@ -19,36 +19,36 @@ import java.util.Optional;
 
 public class PaintPane extends BorderPane {
 
-	CanvasState canvasState;
+	private CanvasState canvasState;
 
 	// Canvas y relacionados
-	Canvas canvas = new Canvas(800, 600);
-	GraphicsContext gc = canvas.getGraphicsContext2D();
-	Color lineColor = Color.CORNFLOWERBLUE;
-	Color fillColor = Color.MISTYROSE;
-	double strokeWidth = 1;
+	private Canvas canvas = new Canvas(800, 600);
+	private GraphicsContext gc = canvas.getGraphicsContext2D();
+	private Color lineColor = Color.CORNFLOWERBLUE;
+	private Color fillColor = Color.MISTYROSE;
+	private double strokeWidth = 1;
 
-	Point previousMouse;
+	private Point previousMouse;
 
 	// Botones Barra Izquierda
-	regularButtons deletionButton = new deletionButton();
-	regularButtons toFrontButton = new toFrontButton();
-	regularButtons toBackButton = new toBackButton();
-	frontend.buttons.selectionButton selectionButton= new selectionButton();
+	private regularButtons deletionButton = new deletionButton();
+	private regularButtons toFrontButton = new toFrontButton();
+	private regularButtons toBackButton = new toBackButton();
+	private selectionButton selectionButton= new selectionButton();
 
 	// Dibujar una figura
-	Point startPoint;
+	private Point startPoint;
 
 	// StatusBar
-	StatusPane statusPane;
+	private StatusPane statusPane;
 
 	// Seleccionar una o varias figuras
-	List<Drawable> selectedFigures = new ArrayList<>();
+	private List<Drawable> selectedFigures = new ArrayList<>();
 
 	//toggleGroup
-	ToggleGroup toggleGroup = new ToggleGroup();
+	private ToggleGroup toggleGroup = new ToggleGroup();
 
-	Image cursorImage = new Image("file:cursores/pokeball.png");
+	private Image cursorImage = new Image("file:cursores/pokeball.png");
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
