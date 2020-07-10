@@ -30,4 +30,18 @@ public class Point {
         return String.format("{%.2f , %.2f}", x, y);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        Point p = (Point) o;
+        if (p.getX() == x) {
+            if (p.getY() == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

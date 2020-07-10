@@ -3,7 +3,7 @@ package backend.model;
 public class Line extends Figure{
 
     protected Point topLeft, bottomRight;
-    private final int lambda = 1000;
+    private static final int lambda = 1000;
 
     public Line(Point topLeft, Point bottomRight) {
         this.topLeft = topLeft;
@@ -41,16 +41,18 @@ public class Line extends Figure{
         this.getBottomRight().addToY(diffY);
     }
 
-    private boolean isBetween(Point a, Point b, Point c){
-        //to know if c is between a and b
-        //the crossproduct(b-a)(c-a) must be 0 (or near in case of using doubles) if the points are aligned
-        double crossproduct = (c.getY()-a.getY())*(b.getX()-a.getX())-(c.getX()-a.getX())*(b.getY()-a.getY());
-        if ( Math.abs(crossproduct) > lambda) return false;
-        //if the dotproduct(b-a)(c-a) is positive and less than the square of the distance(ab) then c is between a and b
-        double dotproduct = (c.getX()-a.getX())*(b.getX()-a.getX())+(c.getY()-a.getY())*(b.getY()-a.getY());
-        if (dotproduct < 0) return false;
-        double squaredlengthba = (b.getX()-a.getX())*(b.getX()-a.getX())+(b.getY()-a.getY())*(b.getY()-a.getY());
-        return !(dotproduct > squaredlengthba);
-
+    private static boolean isBetween(Point a, Point b, Point c){
+        if (!a.equals(b)) {
+            //to know if c is between a and b
+            //the crossproduct(b-a)(c-a) must be 0 (or near in case of using doubles) if the points are aligned
+            double crossproduct = (c.getY() - a.getY()) * (b.getX() - a.getX()) - (c.getX() - a.getX()) * (b.getY() - a.getY());
+            if (Math.abs(crossproduct) > lambda) return false;
+            //if the dotproduct(b-a)(c-a) is positive and less than the square of the distance(ab) then c is between a and b
+            double dotproduct = (c.getX() - a.getX()) * (b.getX() - a.getX()) + (c.getY() - a.getY()) * (b.getY() - a.getY());
+            if (dotproduct < 0) return false;
+            double squaredlengthba = (b.getX() - a.getX()) * (b.getX() - a.getX()) + (b.getY() - a.getY()) * (b.getY() - a.getY());
+            return !(dotproduct > squaredlengthba);
+        }
+        return (a.equals(c));
     }
 }
