@@ -2,7 +2,6 @@ package frontend.buttons;
 
 import frontend.CanvasState;
 import frontend.Drawable.Drawable;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 

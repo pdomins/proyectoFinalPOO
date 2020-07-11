@@ -5,7 +5,6 @@ import frontend.CanvasState;
 import backend.model.Point;
 import backend.model.Rectangle;
 import frontend.Drawable.Drawable;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.image.Image;

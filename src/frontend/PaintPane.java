@@ -35,25 +35,26 @@ public class PaintPane extends BorderPane {
 	private regularButtons toBackButton = new toBackButton();
 	private selectionButton selectionButton= new selectionButton();
 
-	// Dibujar una figura
+	// Punto Inicial para dibujar una figura
 	private Point startPoint;
 
-	// Seleccionar una o varias figuras
+	// Lista para la seleccion de figuras
 	private List<Drawable> selectedFigures = new ArrayList<>();
 
-	//toggleGroup
+	//ToggleGroup de botones
 	private ToggleGroup toggleGroup = new ToggleGroup();
 
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
 		this.canvasState = canvasState;
-		ColorPicker fillingPicker = new ColorPicker(fillColor);
-		ColorPicker strokePicker = new ColorPicker(lineColor);
-		Slider strokeSlider = new Slider(1, 50, strokeWidth);
-		List<ToggleButton> auxList = new ArrayList<>();
-		ImageCursor cursorImage = new ImageCursor(new Image("file:cursores/canvasCursor.png"));
-		canvas.setCursor(cursorImage);
 
+		ColorPicker fillingPicker = new ColorPicker(fillColor); //color picker para el relleno
+		ColorPicker strokePicker = new ColorPicker(lineColor); //color picker para el contorno
+		Slider strokeSlider = new Slider(1, 50, strokeWidth); //slider para grosor de contorno
+
+
+		//Seteamos los botones tipo Toggle
+		List<ToggleButton> auxList = new ArrayList<>();
 		selectionButton.setToggleGroup(toggleGroup);
 		auxList.add(selectionButton);
 
@@ -65,6 +66,7 @@ public class PaintPane extends BorderPane {
 			aux.setCursor(figuresTog.getCursorImage());
 		}
 
+		//Seteamos los demas botones y sus acciones
 		deletionButton.setOnAction(event1 -> {
 			deletionButton.action(selectedFigures,canvasState);
 			redrawCanvas();
@@ -79,6 +81,7 @@ public class PaintPane extends BorderPane {
 		});
 
 
+		//Seteamos los ColorPicker y el Slider
 		strokeSlider.setShowTickLabels(true);
 		strokeSlider.setOnMouseDragged(event -> {
 			double value = strokeSlider.getValue();
@@ -106,6 +109,7 @@ public class PaintPane extends BorderPane {
 		});
 
 
+		//Creamos el layout del panel izquierdo y agregamos todos los elementos
 		VBox buttonsBox = new VBox(10);
 		buttonsBox.getChildren().addAll(auxList);
 		buttonsBox.getChildren().add(deletionButton);
@@ -117,27 +121,26 @@ public class PaintPane extends BorderPane {
 		buttonsBox.getChildren().add(new Label("Relleno"));
 		buttonsBox.getChildren().add(fillingPicker);//COLOR PICKER
 		buttonsBox.setPadding(new Insets(5));
-		buttonsBox.setStyle("-fx-background-color: #999");
+		buttonsBox.setStyle("-fx-background-color: #FFABF2");
 		buttonsBox.setPrefWidth(100);
-		gc.setLineWidth(strokeWidth);
 
-
+		//Comportamiento del canvas al presionar el mouse
 		canvas.setOnMousePressed(event -> startPoint = new Point(event.getX(), event.getY()));
 
-
+		//Comportamiento del canvas al soltar el mouse
 		canvas.setOnMouseReleased(event -> {
 			Point endPoint = new Point(event.getX(), event.getY());
-			ToggleButton activeButton = (ToggleButton) toggleGroup.getSelectedToggle();
-			if (activeButton == selectionButton) { //criterio seleccion multiple
-				List<Drawable> found = selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState);
+			ToggleButton activeButton = (ToggleButton) toggleGroup.getSelectedToggle(); //Boton seleccionado
+			if (activeButton == selectionButton) {
+				List<Drawable> found = selectionButton.selectMultipleFigures(startPoint,endPoint,canvasState); //Lista de figuras encontradas en el area del drag
 				if (!found.isEmpty() && selectedFigures.isEmpty()) selectedFigures.addAll(found); //Si encontre figuras pero tengo otras seleccionadas, no las selecciono
 				else selectedFigures.clear(); // Si no encontre nada, vacio selectedFigures (Click o drag sobre zona vacia)
 				statusPane.showStatus(selectedFigures);
-			}else if (Optional.ofNullable(activeButton).isPresent()) {
-					figuresTogglesEnum auxButton = figuresTogglesEnum.matchAndGetButtonName(activeButton.getText());
+			}else if (Optional.ofNullable(activeButton).isPresent()) { //Si es un boton de Figuras
+					figuresTogglesEnum auxButton = figuresTogglesEnum.matchAndGetButtonName(activeButton.getText()); //Obtenemos el boton
 						if (Optional.ofNullable(auxButton).isPresent()) {
-							Drawable newFigure = auxButton.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth);
-							if (Optional.ofNullable(newFigure).isPresent()) canvasState.addFigure(newFigure);
+							Drawable newFigure = auxButton.newFigure(startPoint, endPoint, fillColor, lineColor, strokeWidth); //Creamos un nueva figura
+							if (Optional.ofNullable(newFigure).isPresent()) canvasState.addFigure(newFigure); //agregamos la figura
 							statusPane.showStatusNewFigure(newFigure);
 						}
 						startPoint = null;
@@ -145,7 +148,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
-
+		//Comportaiento del canvas al mover el mouse
 		canvas.setOnMouseMoved(event -> {
 			Point eventPoint = new Point(event.getX(), event.getY());
 			StringBuilder label = new StringBuilder();
@@ -154,11 +157,13 @@ public class PaintPane extends BorderPane {
 					label.append(figure.toString());
 				}
 			}
-			statusPane.updateOrDefault(label.toString(), eventPoint.toString());
+			statusPane.updateOrDefault(label.toString(), eventPoint.toString()); //Actualizamos el statusPane con la posicion del mouse
 			previousMouse = eventPoint;
 		});
 
+		//Comportamiento del canvas al hacer click
 		canvas.setOnMouseClicked(event -> {
+			//Si el boton de seleccion esta activado, recorre todas las figuras para ver cual es la ultima que se encuentra en ese punto
 			if( toggleGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				Drawable lastFigure = null;
@@ -175,7 +180,9 @@ public class PaintPane extends BorderPane {
 			}
 		});
 
+		//Comportamiento del canvas al hacer un drag
 		canvas.setOnMouseDragged(event -> {
+			//Si el boton de seleccion esta activado, mueve las figuras seleccionadas
 			if(toggleGroup.getSelectedToggle() == selectionButton) {
 				Point eventPoint = new Point(event.getX(), event.getY());
 				double diffX = (eventPoint.getX() - previousMouse.getX());
@@ -187,11 +194,17 @@ public class PaintPane extends BorderPane {
 				previousMouse = eventPoint;
 			}
 		});
-		setLeft(buttonsBox);
+
+		//Imagen del cursor
+		ImageCursor cursorImage = new ImageCursor(new Image("file:cursores/canvasCursor.png"));
+		canvas.setCursor(cursorImage);
 		buttonsBox.setCursor(cursorImage);
+
+		setLeft(buttonsBox);
 		setRight(canvas);
 	}
 
+	//Dibujado del canvas
 	void redrawCanvas() {
 		gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 		for (Drawable figure : canvasState.figures()) {
