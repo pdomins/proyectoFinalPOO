@@ -5,7 +5,11 @@ import frontend.Drawable.Drawable;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class toBackButton extends regularButtons{
 
@@ -17,7 +21,9 @@ public class toBackButton extends regularButtons{
 
     @Override
     public void action(List<Drawable> selectedFigures, CanvasState canvasState) {
-        for (Drawable figure : selectedFigures) {
+        List<Drawable> selectedCopy = new ArrayList<>(selectedFigures); //Copia para invertir y preservar el orden
+        Collections.reverse(selectedCopy);
+        for (Drawable figure : selectedCopy) {
             canvasState.setToBottom(figure);
         }
     }
