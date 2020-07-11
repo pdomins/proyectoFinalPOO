@@ -20,7 +20,7 @@ public class AppLauncher extends Application {
 		primaryStage.show();
 		primaryStage.setOnCloseRequest(event -> {
 			event.consume();
-			closeProcesses.checkClosing();
+			CloseProcesses.checkClosing();
 		});
 	}
 

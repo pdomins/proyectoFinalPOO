@@ -9,14 +9,14 @@ import javafx.scene.paint.Color;
 
 public enum figuresTogglesEnum implements PointValidator {
 
-    RECTANGLE("Rectángulo","file:cursores/squirtle.png"){
+    RECTANGLE("Rectángulo","file:cursores/rectangleCursor.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
             return new DrawableRectangle(startPoint, endPoint, fillColor, strokeColor, strokeWidth);
         }
         return null; }},
-    SQUARE("Cuadrado","file:cursores/bulbasaur.png"){
+    SQUARE("Cuadrado","file:cursores/squareCursor.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -24,7 +24,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    CIRCLE("Círculo","file:cursores/cyndaquil.png"){
+    CIRCLE("Círculo","file:cursores/circleCursor.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)){
@@ -33,7 +33,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    ELLIPSE("Elipse","file:cursores/totodile.png"){
+    ELLIPSE("Elipse","file:cursores/ellipseCursor.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (pointValidations(startPoint,endPoint)) {
@@ -45,7 +45,7 @@ public enum figuresTogglesEnum implements PointValidator {
         }
         return null;
     }},
-    LINE("Línea","file:cursores/chikorita.png"){
+    LINE("Línea","file:cursores/lineCursor.png"){
         @Override
         public Drawable newFigure(Point startPoint, Point endPoint, Color fillColor, Color strokeColor, double strokeWidth) {
         if (areValidPoints(startPoint,endPoint)){

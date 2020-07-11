@@ -18,7 +18,7 @@ public class selectionButton extends ToggleButton implements PointValidator {
     public selectionButton() {
         super("Seleccionar");
         this.setMinWidth(90);
-        this.setCursor(new ImageCursor(new Image("file:cursores/charmander.png")));
+        this.setCursor(new ImageCursor(new Image("file:cursores/selectionCursor.png")));
 
     }
 

@@ -12,7 +12,7 @@ public class toFrontButton extends regularButtons{
 
     public toFrontButton() {
         super("Al Frente");
-        this.setCursor(new ImageCursor(new Image("file:cursores/treecko.png")));
+        this.setCursor(new ImageCursor(new Image("file:cursores/toFrontCursor.png")));
 
     }
 

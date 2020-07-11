@@ -12,7 +12,7 @@ public class toBackButton extends regularButtons{
 
     public toBackButton() {
         super("Al Fondo");
-        this.setCursor(new ImageCursor(new Image("file:cursores/mudkip.png")));
+        this.setCursor(new ImageCursor(new Image("file:cursores/toBackCursor.png")));
 
     }
 

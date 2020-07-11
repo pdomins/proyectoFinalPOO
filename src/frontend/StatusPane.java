@@ -20,7 +20,7 @@ public class StatusPane extends BorderPane {
 		statusLabel.setAlignment(Pos.CENTER);
 		statusLabel.setStyle("-fx-font-size: 16");
 		setCenter(statusLabel);
-		this.setCursor(new ImageCursor(new Image("file:cursores/snorlax.png")));
+		this.setCursor(new ImageCursor(new Image("file:cursores/statusLabelCursor.png")));
 
 	}
 	

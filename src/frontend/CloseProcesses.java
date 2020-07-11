@@ -5,7 +5,7 @@ import javafx.scene.control.ButtonType;
 
 import java.util.Optional;
 
-public class closeProcesses {
+public class CloseProcesses {
 
     public static void checkClosing(){
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

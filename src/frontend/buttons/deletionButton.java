@@ -3,7 +3,6 @@ package frontend.buttons;
 
 import frontend.CanvasState;
 import frontend.Drawable.Drawable;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.image.Image;
 
@@ -13,7 +12,7 @@ public class deletionButton extends regularButtons {
 
     public deletionButton() {
         super("Eliminar");
-        this.setCursor(new ImageCursor(new Image("file:cursores/torchic.png")));
+        this.setCursor(new ImageCursor(new Image("file:cursores/deletionCursor.png")));
 
     }
     public void action(List<Drawable> selectedFigures, CanvasState canvasState){

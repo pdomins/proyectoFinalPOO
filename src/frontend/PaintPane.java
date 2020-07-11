@@ -3,7 +3,6 @@ package frontend;
 import backend.model.*;
 import frontend.Drawable.Drawable;
 import frontend.buttons.*;
-import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.control.*;
 import javafx.geometry.Insets;
@@ -39,26 +38,21 @@ public class PaintPane extends BorderPane {
 	// Dibujar una figura
 	private Point startPoint;
 
-	// StatusBar
-	private StatusPane statusPane;
-
 	// Seleccionar una o varias figuras
 	private List<Drawable> selectedFigures = new ArrayList<>();
 
 	//toggleGroup
 	private ToggleGroup toggleGroup = new ToggleGroup();
 
-	private Image cursorImage = new Image("file:cursores/pokeball.png");
-
 	public PaintPane(CanvasState canvasState, StatusPane statusPane) {
 
 		this.canvasState = canvasState;
-		this.statusPane = statusPane;
 		ColorPicker fillingPicker = new ColorPicker(fillColor);
 		ColorPicker strokePicker = new ColorPicker(lineColor);
 		Slider strokeSlider = new Slider(1, 50, strokeWidth);
 		List<ToggleButton> auxList = new ArrayList<>();
-		canvas.setCursor(new ImageCursor(cursorImage));
+		ImageCursor cursorImage = new ImageCursor(new Image("file:cursores/canvasCursor.png"));
+		canvas.setCursor(cursorImage);
 
 		selectionButton.setToggleGroup(toggleGroup);
 		auxList.add(selectionButton);
@@ -194,7 +188,7 @@ public class PaintPane extends BorderPane {
 			}
 		});
 		setLeft(buttonsBox);
-		buttonsBox.setCursor(new ImageCursor(cursorImage));
+		buttonsBox.setCursor(cursorImage);
 		setRight(canvas);
 	}
 

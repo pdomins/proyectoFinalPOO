@@ -9,9 +9,9 @@ public class AppMenuBar extends MenuBar {
     public AppMenuBar() {
         Menu file = new Menu("Archivo");
         MenuItem exitMenuItem = new MenuItem("Salir");
-        exitMenuItem.setOnAction(event -> closeProcesses.checkClosing());
+        exitMenuItem.setOnAction(event -> CloseProcesses.checkClosing());
         file.getItems().add(exitMenuItem);
-        this.setCursor(new ImageCursor(new Image("file:cursores/pikachu.png")));
+        this.setCursor(new ImageCursor(new Image("file:cursores/menuBarCursor.png")));
         Menu help = new Menu("Ayuda");
         MenuItem aboutMenuItem = new MenuItem("Acerca De");
         aboutMenuItem.setOnAction(event -> {
